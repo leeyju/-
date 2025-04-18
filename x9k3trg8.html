@@ -2,37 +2,10 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>환자 정보</title>
+  <title>홍길동 인증</title>
 </head>
 <body>
-  <hr>
-  <h1>일회용 인증 정보</h1>
-  <p id="codeArea">인증 코드 생성 중...</p>
-  <p id="timeArea"></p>
-
-  <script>
-    // 랜덤 코드 생성 함수
-    function generateCode(length = 6) {
-      const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
-      let result = '';
-      for (let i = 0; i < length; i++) {
-        result += chars.charAt(Math.floor(Math.random() * chars.length));
-      }
-      return result;
-    }
-
-
-    // 기존에 v 파라미터 없으면 생성해서 리디렉션
-    const url = new URL(window.location);
-    if (!url.searchParams.get("v")) {
-      const newCode = generateCode();
-      url.searchParams.set("v", newCode);
-      window.location.href = url.toString();
-    } else {
-      // 코드 표시
-      const code = url.searchParams.get("v");
-      document.getElementById("codeArea").innerText = `인증 코드: ${code}`;
-    }
-  </script>
+  <h2>인증 코드</h2>
+  <p style="font-size: 36px; font-weight: bold; color: darkblue;">1742</p>
 </body>
 </html>
