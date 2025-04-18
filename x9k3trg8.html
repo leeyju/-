@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>인증 코드 입력</title>
+</head>
+<body>
+  <h2>인증 코드 입력</h2>
+  <form onsubmit="checkCode(event)">
+    <input type="text" id="codeInput" placeholder="예: 1742" required>
+    <button type="submit">확인</button>
+  </form>
+
+  <script>
+    function checkCode(e) {
+      e.preventDefault();
+      const input = document.getElementById('codeInput').value;
+
+      // 예시 코드: 환자 코드에 따라 이동할 주소 매핑
+      const codeMap = {
+        "0216": "https://leeyju.github.io/patient-info/patient1.html",
+        "1127": "https://leeyju.github.io/patient-info/patient3.html",
+        "0126": "https://leeyju.github.io/patient-info/Patient4.html"
+      };
+
+      if (codeMap[input]) {
+        window.location.href = codeMap[input]; // 해당 환자 상세페이지로 이동
+      } else {
+        alert("인증 코드가 올바르지 않습니다.");
+      }
+    }
+  </script>
+</body>
+</html>
