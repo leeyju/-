@@ -2,12 +2,12 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>인증 코드 입력</title>
+  <title>개인 식별코드 입력</title>
 </head>
 <body>
-  <h2>인증 코드 입력</h2>
+  <h2>개인 식별코드 입력</h2>
   <form onsubmit="checkCode(event)">
-    <input type="text" id="codeInput" placeholder="예: 1742" required>
+    <input type="text" id="codeInput" placeholder="예: 1109" required>
     requred
     <style="font-size: 24px; padding: 10px; wdth: 200px;">
     <button type="submit"style="font-size: 18px; paddng: 10px;">확인</button> 
@@ -31,7 +31,7 @@
       if (codeMap[input]) {
         window.location.href = codeMap[input]; // 해당 환자 상세페이지로 이동
       } else {
-        alert("인증 코드가 올바르지 않습니다.");
+        alert("개인 식별코드가 올바르지 않습니다.");
       }
     }
   </script>
