@@ -7,10 +7,18 @@
 <body>
   <h2>개인 식별코드 입력</h2>
   <form onsubmit="checkCode(event)">
-    <input type="text" id="codeInput" placeholder="예: 1109" required>
-    requred
-    <style="font-size: 24px; padding: 10px; wdth: 200px;">
-    <button type="submit"style="font-size: 18px; paddng: 10px;">확인</button> 
+    <input 
+      type="text" 
+      id="codeInput" 
+      placeholder="예: 1109" 
+      required
+      style="font-size: 28px; padding: 12px; width: 250px;">
+      
+    <button 
+      type="submit"
+      style="font-size: 20px; padding: 12px; margin-left: 10px;">
+      확인
+    </button> 
   </form>
 
   <script>
@@ -24,12 +32,11 @@
         "0126": "https://leeyju.github.io/patient-info/Patient4.html",
         "0915": "https://leeyju.github.io/patient-info/Patient5.html",
         "0611": "https://leeyju.github.io/patient-info/Patient6.html",
-        "0908": "https://leeyju.github.io/patient-info/Patient7.html",
-        
+        "0908": "https://leeyju.github.io/patient-info/Patient7.html"
       };
 
       if (codeMap[input]) {
-        window.location.href = codeMap[input]; // 해당 환자 상세페이지로 이동
+        window.location.href = codeMap[input];
       } else {
         alert("개인 식별코드가 올바르지 않습니다.");
       }
