@@ -6,16 +6,17 @@
   <script>
     // 구글 폼에 데이터 전송
     function sendToGoogleForm(org, name, gender, age, nextUrl) {
-      const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfA9MyCF3AloKtzHwEFnyxfXLhHBx7tIpNxK0vGBYdaWL4ltQ/formResponse";  // 구글폼 링크
+      const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfA9MyCF3AloKtzHwEFnyxfXLhHBx7tIpNxK0vGBYdaWL4ltQ/formResponse"; // 구글폼 링크
 
       const formData = new FormData();
-      formData.append("entry.866977490", org);       // 소속기관
-      formData.append("entry.2090662080", name);     // 이름
-      formData.append("entry.30391193", gender);     // 성별
-      formData.append("entry.1769811738", age);      // 나이
+      formData.append("entry.866977490", org);  // 소속기관
+      formData.append("entry.2090662080", name);  // 이름
+      formData.append("entry.30391193", gender);  // 성별
+      formData.append("entry.1769811738", age);  // 나이
 
       fetch(formUrl, {
         method: "POST",
+        mode: "no-cors",
         body: formData
       }).then(() => {
         window.location.href = nextUrl;  // 폼 제출 후 지정된 URL로 이동
@@ -25,7 +26,7 @@
       });
     }
 
-    // 개인 식별코드 입력 폼 처리
+    // 개인 식별 코드 입력 처리
     function checkCode(e) {
       e.preventDefault();
       const code = document.getElementById('codeInput').value;
@@ -44,13 +45,13 @@
       };
 
       if (codeMap[code]) {
-        sendToGoogleForm(org, name, gender, age, codeMap[code]);
+        sendToGoogleForm(org, name, gender, age, codeMap[code]);  // 구글 폼으로 데이터 전송 후 환자 정보 페이지로 이동
       } else {
         alert("개인 식별코드가 올바르지 않습니다.");
       }
     }
 
-    // 응급용 코드 입력 폼 처리
+    // 응급용 코드 입력 처리
     function checkEmergencyCode(e) {
       e.preventDefault();
       const emergencyCode = document.getElementById('emergencyCodeInput').value;
