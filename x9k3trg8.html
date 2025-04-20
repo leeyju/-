@@ -23,23 +23,44 @@
 
   <script>
     function checkCode(e) {
-      e.preventDefault();
-      const input = document.getElementById('codeInput').value;
+      e.preventDefault(); // 폼 제출 막기
 
+      const input = document.getElementById('codeInput').value; // 코드 입력받기
       const codeMap = {
         "0216": "https://leeyju.github.io/patient-info/patient1.html",
         "1127": "https://leeyju.github.io/patient-info/patient3.html",
-        "0126": "https://leeyju.github.io/patient-info/Patient4.html",
-        "0915": "https://leeyju.github.io/patient-info/Patient5.html",
-        "0611": "https://leeyju.github.io/patient-info/Patient6.html",
-        "0908": "https://leeyju.github.io/patient-info/Patient7.html"
+        "0126": "https://leeyju.github.io/patient-info/Patient4.html"
       };
 
+      // 코드가 맞으면 해당 환자 정보 페이지로 이동
       if (codeMap[input]) {
+        // 구글폼에 기록 (간단하게 예시 데이터만 넣어둠)
+        recordToGoogleForm(input);
+
+        // 환자 페이지로 이동
         window.location.href = codeMap[input];
       } else {
         alert("개인 식별코드가 올바르지 않습니다.");
       }
+    }
+
+    // 구글폼으로 데이터 기록 (예시로 코드를 기록)
+    function recordToGoogleForm(input) {
+      const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdDULIbp4yoD.../formResponse"; // 구글폼 링크
+
+      // 데이터를 구글폼에 전송하는 간단한 방법
+      const formData = new FormData();
+      formData.append("entry.12345678", input); // 구글폼에서 만든 'entry' 값을 넣어줘야 함
+
+      fetch(formUrl, {
+        method: "POST",
+        mode: "no-cors",
+        body: formData
+      }).then(() => {
+        console.log("정보가 기록되었습니다!");
+      }).catch(error => {
+        console.error("폼 전송 실패", error);
+      });
     }
   </script>
 </body>
