@@ -4,29 +4,27 @@
   <meta charset="UTF-8">
   <title>개인 식별코드 및 응급용 코드 입력</title>
   <script>
-    // 구글 폼에 데이터 전송
+    // 개인 식별코드 처리
     function sendToGoogleForm(org, name, gender, age, nextUrl) {
-      const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfA9MyCF3AloKtzHwEFnyxfXLhHBx7tIpNxK0vGBYdaWL4ltQ/formResponse"; // 구글폼 링크
-
+      const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfA9MyCF3AloKtzHwEFnyxfXLhHBx7tIpNxK0vGBYdaWL4ltQ/formResponse";
       const formData = new FormData();
-      formData.append("entry.866977490", org);  // 소속기관
-      formData.append("entry.2090662080", name);  // 이름
-      formData.append("entry.30391193", gender);  // 성별
-      formData.append("entry.1769811738", age);  // 나이
+      formData.append("entry.866977490", org);
+      formData.append("entry.2090662080", name);
+      formData.append("entry.30391193", gender);
+      formData.append("entry.1769811738", age);
 
       fetch(formUrl, {
         method: "POST",
         mode: "no-cors",
         body: formData
       }).then(() => {
-        window.location.href = nextUrl;  // 폼 제출 후 지정된 URL로 이동
+        window.location.href = nextUrl;
       }).catch(error => {
-        console.error("구글폼 데이터 전송 실패:", error);
-        alert("데이터 전송 중 오류가 발생했습니다.");
+        console.error("데이터 전송 오류:", error);
+        alert("데이터 전송 중 문제가 발생했어요.");
       });
     }
 
-    // 개인 식별 코드 입력 처리
     function checkCode(e) {
       e.preventDefault();
       const code = document.getElementById('codeInput').value;
@@ -36,38 +34,64 @@
       const age = document.getElementById('ageInput').value;
 
       const codeMap = {
-        "0216": "https://leeyju.github.io/patient-info/patient1.html",  // 코드와 환자 정보 페이지 연결
+        "0216": "https://leeyju.github.io/patient-info/patient1.html",
         "1127": "https://leeyju.github.io/patient-info/patient3.html",
         "0126": "https://leeyju.github.io/patient-info/Patient4.html",
         "0915": "https://leeyju.github.io/patient-info/Patient5.html",
         "0611": "https://leeyju.github.io/patient-info/Patient6.html",
-        "0908": "https://leeyju.github.io/patient-info/Patient7.html"
+        "0908": "https://leeyju.github.io/patient-info/Patient7.html"  // 6번째 환자 추가
       };
 
       if (codeMap[code]) {
-        sendToGoogleForm(org, name, gender, age, codeMap[code]);  // 구글 폼으로 데이터 전송 후 환자 정보 페이지로 이동
+        sendToGoogleForm(org, name, gender, age, codeMap[code]);
       } else {
-        alert("개인 식별코드가 올바르지 않습니다.");
+        alert("개인 식별코드가 올바르지 않아요.");
       }
     }
 
-    // 응급용 코드 입력 처리
-    function checkEmergencyCode(e) {
-      e.preventDefault();
-      const emergencyCode = document.getElementById('emergencyCodeInput').value;
+    // 응급용 코드 처리
+    function getPatientId() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get("patient");
+    }
 
-      const validCode = "8563";  // 응급용 코드
+    unction handleEmergencyCode(e) {
+  e.preventDefault();
+  const emergencyCode = document.getElementById('emergencyCodeInput').value;
+  const EMERGENCY_CODE = "EMG2025";  // 고정 응급 코드
 
-      if (emergencyCode === validCode) {
-        window.location.href = "https://leeyju.github.io/patient-info/Patient1.html";  // 환자 정보 페이지로 이동
+  // 환자 ID와 해당 페이지를 매칭하는 객체
+  const patientPages = {
+    "hong": "https://leeyju.github.io/patient-info/patient1.html",
+    "kim": "https://leeyju.github.io/patient-info/patient3.html",
+    "lee": "https://leeyju.github.io/patient-info/Patient4.html",
+    "park": "https://leeyju.github.io/patient-info/Patient5.html",
+    "choi": "https://leeyju.github.io/patient-info/Patient6.html",
+    "jung": "https://leeyju.github.io/patient-info/Patient7.html"  // 6번째 환자 추가
+  };
+
+  // 응급 코드가 맞고, 환자 정보가 있을 때
+  if (emergencyCode === EMERGENCY_CODE) {
+    const patientId = prompt("환자 이름을 입력하세요: (예: hong, kim, lee, park, choi, jung)");  // 환자 이름을 입력받음
+
+    console.log("입력된 환자 이름:", patientId);  // 입력된 환자 이름을 로그로 확인
+
+    if (patientPages[patientId]) {
+      window.location.href = patientPages[patientId];  // 해당 환자 페이지로 이동
+    } else {
+      alert("존재하지 않는 환자입니다.");
+    }
+  } else {
+    alert("응급용 코드가 잘못되었어요.");
+  }
+}
       } else {
-        alert("잘못된 응급용 코드입니다.");
+        alert("환자 정보가 잘못되었어요.");
       }
     }
   </script>
 </head>
 <body>
-  <!-- 개인 식별코드 입력 폼 -->
   <h2>개인 식별코드 입력</h2>
   <form onsubmit="checkCode(event)" style="font-size: 18px;">
     <p><input type="text" id="codeInput" placeholder="개인 식별코드" required></p>
@@ -80,9 +104,8 @@
 
   <hr>
 
-  <!-- 응급용 코드 입력 폼 -->
   <h2>응급용 코드 입력</h2>
-  <form onsubmit="checkEmergencyCode(event)" style="font-size: 18px;">
+  <form onsubmit="handleEmergencyCode(event)" style="font-size: 18px;">
     <p><input type="text" id="emergencyCodeInput" placeholder="응급용 코드" required></p>
     <button type="submit" style="padding: 10px 20px; font-size: 18px;">확인</button>
   </form>
