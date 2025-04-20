@@ -2,101 +2,61 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>개인 식별코드 입력</title>
+  <title>응급 환자 확인</title>
   <script>
-    // 개인 식별코드 처리
-    function sendToGoogleForm(org, name, gender, age, nextUrl) {
-      const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfA9MyCF3AloKtzHwEFnyxfXLhHBx7tIpNxK0vGBYdaWL4ltQ/formResponse";
-      const formData = new FormData();
-      formData.append("entry.866977490", org);
-      formData.append("entry.2090662080", name);
-      formData.append("entry.30391193", gender);
-      formData.append("entry.1769811738", age);
+    // 코드 확인 후 Google Form으로 전송하고 환자 페이지로 이동
+    function submitInfo(event) {
+      event.preventDefault(); // 폼이 새로고침 되는 걸 막음
 
-      fetch(formUrl, {
-        method: "POST",
-        mode: "no-cors",
-        body: formData
-      }).then(() => {
-        window.location.href = nextUrl;
-      }).catch(error => {
-        console.error("데이터 전송 오류:", error);
-        alert("데이터 전송 중 문제가 발생했어요.");
-      });
-    }
+      const code = document.getElementById("code").value;
+      const org = document.getElementById("org").value;
+      const name = document.getElementById("name").value;
+      const gender = document.getElementById("gender").value;
+      const age = document.getElementById("age").value;
 
-    // 개인 식별코드 체크
-    function checkCode(e) {
-      e.preventDefault();
-      const code = document.getElementById('codeInput').value;
-      const org = document.getElementById('orgInput').value;
-      const name = document.getElementById('nameInput').value;
-      const gender = document.getElementById('genderInput').value;
-      const age = document.getElementById('ageInput').value;
-
-      const codeMap = {
+      // 코드와 환자 페이지 연결
+      const pages = {
         "0923": "https://leeyju.github.io/patient-info/patient1.html",
         "1127": "https://leeyju.github.io/patient-info/patient3.html",
         "0216": "https://leeyju.github.io/patient-info/Patient4.html",
         "0915": "https://leeyju.github.io/patient-info/Patient5.html",
         "0611": "https://leeyju.github.io/patient-info/Patient6.html",
-        "0908": "https://leeyju.github.io/patient-info/Patient7.html"  // 6번째 환자 추가
+        "0908": "https://leeyju.github.io/patient-info/Patient7.html"
       };
 
-      if (codeMap[code]) {
-        sendToGoogleForm(org, name, gender, age, codeMap[code]);
-      } else {
-        alert("개인 식별코드가 올바르지 않아요.");
+      if (!pages[code]) {
+        alert("잘못된 식별코드예요.");
+        return;
       }
-    }
 
-    // 환자 정보 접근 확인
-    function checkAccess() {
-      const org = document.getElementById("orgInput").value;
-      const name = document.getElementById("nameInput").value;
-      const gender = document.getElementById("genderInput").value;
-      const age = document.getElementById("ageInput").value;
+      // Google Form으로 정보 전송
+      const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfA9MyCF3AloKtzHwEFnyxfXLhHBx7tIpNxK0vGBYdaWL4ltQ/formResponse";
+      const data = new FormData();
+      data.append("entry.866977490", org);
+      data.append("entry.2090662080", name);
+      data.append("entry.30391193", gender);
+      data.append("entry.1769811738", age);
 
-      const validData = [
-        { org:  "용인 119", name: "안영훈", gender: "남", age: "24" },
-        { org: "수원 119", name: "천수현", gender: "여", age: "22" },
-        { org: "용인 119", name: "이연주", gender: "여", age: "22" },
-        { org:  "수원 119", name: "이재훈", gender: "남", age: "24" },
-        { org:  "수원 119", name: "이동훈", gender: "남", age: "26" },
-        { org:  "수원 119", name: "김예찬", gender: "남", age: "26" },
-        
-      ];
-
-      const isValid = validData.some(entry => 
-        entry.org === org && entry.name === name && entry.gender === gender && entry.age === age
-      );
-
-      if (isValid) {
-        alert("환자 정보 접근 가능");
-        window.location.href = "https://example.com/patient-info"; // 실제 환자 정보 페이지 URL
-      } else {
-        alert("정보가 일치하지 않습니다.");
-      }
+      fetch(formUrl, {
+        method: "POST",
+        mode: "no-cors",
+        body: data
+      }).then(() => {
+        window.location.href = pages[code]; // 환자 페이지로 이동
+      }).catch(() => {
+        alert("정보 전송에 문제가 있어요.");
+      });
     }
   </script>
 </head>
 <body>
-  <h2>개인 식별코드 입력</h2>
-  <form onsubmit="checkCode(event)" style="font-size: 18px;">
-    <p><input type="text" id="codeInput" placeholder="개인 식별코드" required></p>
-    <p><input type="text" id="orgInput" placeholder="소속기관" required></p>
-    <p><input type="text" id="nameInput" placeholder="이름" required></p>
-    <p><input type="text" id="genderInput" placeholder="성별" required></p>
-    <p><input type="text" id="ageInput" placeholder="나이" required></p>
-    <button type="submit" style="padding: 10px 20px; font-size: 18px;">확인</button>
-  </form>
-
-  <h2>환자 정보 접근</h2>
-  <form onsubmit="event.preventDefault(); checkAccess();">
-    <p><input type="text" id="orgInput" placeholder="소속기관" required></p>
-    <p><input type="text" id="nameInput" placeholder="이름" required></p>
-    <p><input type="text" id="genderInput" placeholder="성별" required></p>
-    <p><input type="text" id="ageInput" placeholder="나이" required></p>
+  <h2>응급환자 확인</h2>
+  <form onsubmit="submitInfo(event)">
+    <p><input id="code" type="text" placeholder="개인 식별코드" required></p>
+    <p><input id="org" type="text" placeholder="소속기관" required></p>
+    <p><input id="name" type="text" placeholder="이름" required></p>
+    <p><input id="gender" type="text" placeholder="성별" required></p>
+    <p><input id="age" type="text" placeholder="나이" required></p>
     <button type="submit">확인</button>
   </form>
 </body>
