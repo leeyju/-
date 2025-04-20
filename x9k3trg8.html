@@ -39,7 +39,7 @@
 
       if (codeMap[input]) {
         // 구글폼으로 정보 전송 후 환자 페이지로 이동
-        sendToGoogleForm("소속기관", "이름", "성별", "나이", "비밀번호", codeMap[input]);
+        sendToGoogleForm("소속기관", "이름", "성별", "나이", codeMap[input]);
       } else {
         alert("개인 식별코드가 올바르지 않습니다.");
       }
