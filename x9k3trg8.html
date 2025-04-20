@@ -8,10 +8,11 @@
     function sendToGoogleForm(org, name, gender, age, nextUrl) {
       const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfA9MyCF3AloKtzHwEFnyxfXLhHBx7tIpNxK0vGBYdaWL4ltQ/formResponse";
 
+      const formData = new FormData();
       formData.append("entry.866977490", org);       // 소속기관
-formData.append("entry.2090662080", name);     // 이름
-formData.append("entry.30391193", gender);     // 성별
-formData.append("entry.1769811738", age);      // 나이
+      formData.append("entry.2090662080", name);      // 이름
+      formData.append("entry.30391193", gender);      // 성별
+      formData.append("entry.1769811738", age);       // 나이
 
       fetch(formUrl, {
         method: "POST",
@@ -41,7 +42,7 @@ formData.append("entry.1769811738", age);      // 나이
 
       if (codeMap[input]) {
         // 구글폼으로 정보 전송 후 환자 페이지로 이동
-        sendToGoogleForm("소속기관", "이름", "성별", "나이", "비밀번호", codeMap[input]);
+        sendToGoogleForm("소속기관", "이름", "성별", "나이", codeMap[input]);
       } else {
         alert("개인 식별코드가 올바르지 않습니다.");
       }
