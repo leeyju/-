@@ -10,17 +10,16 @@
 
       const formData = new FormData();
       formData.append("entry.866977490", org);       // 소속기관
-      formData.append("entry.2090662080", name);      // 이름
-      formData.append("entry.30391193", gender);      // 성별
-      formData.append("entry.1769811738", age);       // 나이
+      formData.append("entry.2090662080", name);     // 이름
+      formData.append("entry.30391193", gender);     // 성별
+      formData.append("entry.1769811738", age);      // 나이
 
       fetch(formUrl, {
         method: "POST",
         mode: "no-cors",
         body: formData
       }).then(() => {
-        // 데이터 전송 후 이동
-        window.location.href = nextUrl;
+        window.location.href = nextUrl;  // 성공 후 이동
       }).catch(error => {
         console.error("구글폼 데이터 전송 실패:", error);
         alert("데이터 전송 중 오류가 발생했습니다.");
@@ -29,7 +28,11 @@
 
     function checkCode(e) {
       e.preventDefault();
-      const input = document.getElementById('codeInput').value;
+      const code = document.getElementById('codeInput').value;
+      const org = document.getElementById('orgInput').value;
+      const name = document.getElementById('nameInput').value;
+      const gender = document.getElementById('genderInput').value;
+      const age = document.getElementById('ageInput').value;
 
       const codeMap = {
         "0216": "https://leeyju.github.io/patient-info/patient1.html",
@@ -40,9 +43,8 @@
         "0908": "https://leeyju.github.io/patient-info/Patient7.html"
       };
 
-      if (codeMap[input]) {
-        // 구글폼으로 정보 전송 후 환자 페이지로 이동
-        sendToGoogleForm("소속기관", "이름", "성별", "나이", codeMap[input]);
+      if (codeMap[code]) {
+        sendToGoogleForm(org, name, gender, age, codeMap[code]);
       } else {
         alert("개인 식별코드가 올바르지 않습니다.");
       }
@@ -51,19 +53,14 @@
 </head>
 <body>
   <h2>개인 식별코드 입력</h2>
-  <form onsubmit="checkCode(event)">
-    <input 
-      type="text" 
-      id="codeInput" 
-      placeholder="예: 1109" 
-      required
-      style="font-size: 28px; padding: 12px; width: 250px;">
-      
-    <button 
-      type="submit"
-      style="font-size: 20px; padding: 12px; margin-left: 10px;">
-      확인
-    </button> 
+  <form onsubmit="checkCode(event)" style="font-size: 18px;">
+    <p><input type="text" id="codeInput" placeholder="개인 식별코드" required></p>
+    <p><input type="text" id="orgInput" placeholder="소속기관" required></p>
+    <p><input type="text" id="nameInput" placeholder="이름" required></p>
+    <p><input type="text" id="genderInput" placeholder="성별" required></p>
+    <p><input type="text" id="ageInput" placeholder="나이" required></p>
+    
+    <button type="submit" style="padding: 10px 20px; font-size: 18px;">확인</button>
   </form>
 </body>
 </html>
