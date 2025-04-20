@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>개인 식별코드 및 응급용 코드 입력</title>
   <script>
-    // 구글 폼에 데이터 전송 함수
+    // 구글 폼에 데이터 전송
     function sendToGoogleForm(org, name, gender, age, nextUrl) {
       const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfA9MyCF3AloKtzHwEFnyxfXLhHBx7tIpNxK0vGBYdaWL4ltQ/formResponse";  // 구글폼 링크
 
@@ -25,9 +25,9 @@
       });
     }
 
-    // 개인 식별코드 입력 처리 함수
+    // 개인 식별코드 입력 폼 처리
     function checkCode(e) {
-      e.preventDefault();  // 폼 제출 시 페이지 새로고침 방지
+      e.preventDefault();
       const code = document.getElementById('codeInput').value;
       const org = document.getElementById('orgInput').value;
       const name = document.getElementById('nameInput').value;
@@ -50,16 +50,15 @@
       }
     }
 
-    // 응급용 코드 입력 처리 함수
+    // 응급용 코드 입력 폼 처리
     function checkEmergencyCode(e) {
-      e.preventDefault();  // 폼 제출 시 페이지 새로고침 방지
-      const emergencyCode = document.getElementById('emergencyCodeInput').value.trim();  // 응급용 코드값 가져오기
+      e.preventDefault();
+      const emergencyCode = document.getElementById('emergencyCodeInput').value;
 
       const validCode = "8563";  // 응급용 코드
 
       if (emergencyCode === validCode) {
-        // 응급용 코드가 맞으면 환자 정보 페이지로 이동
-        window.location.href = "https://leeyju.github.io/patient-info/Patient1.html"; 
+        window.location.href = "https://leeyju.github.io/patient-info/Patient1.html";  // 환자 정보 페이지로 이동
       } else {
         alert("잘못된 응급용 코드입니다.");
       }
