@@ -5,7 +5,7 @@
   <title>개인 식별코드 입력</title>
   <script>
     // 구글폼에 데이터 전송 후 이동
-    function sendToGoogleForm(org, name, gender, age, password, nextUrl) {
+    function sendToGoogleForm(org, name, gender, age, nextUrl) {
       const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfA9MyCF3AloKtzHwEFnyxfXLhHBx7tIpNxK0vGBYdaWL4ltQ/formResponse";
 
       const formData = new FormData();
@@ -13,7 +13,6 @@
       formData.append("entry.2090662080", name);
       formData.append("entry.30391193", gender);
       formData.append("entry.1769811738", age);
-      formData.append("entry.1829515676", password);
 
       fetch(formUrl, {
         method: "POST",
