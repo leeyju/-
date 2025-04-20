@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <title>개인 식별코드 입력</title>
   <script>
-    // 구글폼에 데이터 전송
-    function sendToGoogleForm(org, name, gender, age, password) {
+    // 구글폼에 데이터 전송 후 이동
+    function sendToGoogleForm(org, name, gender, age, password, nextUrl) {
       const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfA9MyCF3AloKtzHwEFnyxfXLhHBx7tIpNxK0vGBYdaWL4ltQ/formResponse";
 
       const formData = new FormData();
@@ -20,7 +20,7 @@
         mode: "no-cors",
         body: formData
       }).then(() => {
-        alert("정보가 저장되었습니다!");
+        window.location.href = nextUrl; // 데이터 전송 후 이동
       });
     }
 
@@ -38,9 +38,8 @@
       };
 
       if (codeMap[input]) {
-        // 코드가 맞으면 구글폼 데이터 전송 후 열람 페이지로 이동
-        sendToGoogleForm("소속기관", "이름", "성별", "나이", "비밀번호"); // 예시 데이터
-        window.location.href = codeMap[input];
+        // 구글폼으로 정보 전송 후 환자 페이지로 이동
+        sendToGoogleForm("소속기관", "이름", "성별", "나이", "비밀번호", codeMap[input]);
       } else {
         alert("개인 식별코드가 올바르지 않습니다.");
       }
