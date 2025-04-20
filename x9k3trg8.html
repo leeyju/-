@@ -25,80 +25,51 @@
       });
     }
 
-    // 개인 식별코드 확인
+    // 식별코드와 사용자 정보 모두 일치해야 환자 페이지로 이동
     function checkCode(e) {
       e.preventDefault();
+
       const code = document.getElementById('codeInput').value;
       const org = document.getElementById('orgInput_code').value;
       const name = document.getElementById('nameInput_code').value;
       const gender = document.getElementById('genderInput_code').value;
       const age = document.getElementById('ageInput_code').value;
 
+      // 코드별 등록된 정보와 링크 저장
       const codeMap = {
-        "0923": "https://leeyju.github.io/patient-info/patient1.html",
-        "1127": "https://leeyju.github.io/patient-info/patient3.html",
-        "0216": "https://leeyju.github.io/patient-info/Patient4.html",
-        "0915": "https://leeyju.github.io/patient-info/Patient5.html",
-        "0611": "https://leeyju.github.io/patient-info/Patient6.html",
-        "0908": "https://leeyju.github.io/patient-info/Patient7.html"
+        "0923": { name: "안영훈", org: "용인 119", gender: "남", age: "24", url: "https://leeyju.github.io/patient-info/patient1.html" },
+        "1127": { name: "천수현", org: "수원 119", gender: "여", age: "22", url: "https://leeyju.github.io/patient-info/patient3.html" },
+        "0216": { name: "이연주", org: "용인 119", gender: "여", age: "22", url: "https://leeyju.github.io/patient-info/Patient4.html" },
+        "0915": { name: "이재훈", org: "수원 119", gender: "남", age: "24", url: "https://leeyju.github.io/patient-info/Patient5.html" },
+        "0611": { name: "이동훈", org: "수원 119", gender: "남", age: "26", url: "https://leeyju.github.io/patient-info/Patient6.html" },
+        "0908": { name: "김예찬", org: "수원 119", gender: "남", age: "26", url: "https://leeyju.github.io/patient-info/Patient7.html" }
       };
 
-      if (codeMap[code]) {
-        sendToGoogleForm(org, name, gender, age, codeMap[code]);
-      } else {
+      const info = codeMap[code];
+
+      if (!info) {
         alert("개인 식별코드가 올바르지 않아요.");
+        return;
       }
-    }
 
-    // 접근 권한 확인
-    function checkAccess() {
-      const org = document.getElementById("orgInput_access").value;
-      const name = document.getElementById("nameInput_access").value;
-      const gender = document.getElementById("genderInput_access").value;
-      const age = document.getElementById("ageInput_access").value;
-
-      const validData = [
-        { org: "용인 119", name: "안영훈", gender: "남", age: "24" },
-        { org: "수원 119", name: "천수현", gender: "여", age: "22" },
-        { org: "용인 119", name: "이연주", gender: "여", age: "22" },
-        { org: "수원 119", name: "이재훈", gender: "남", age: "24" },
-        { org: "수원 119", name: "이동훈", gender: "남", age: "26" },
-        { org: "수원 119", name: "김예찬", gender: "남", age: "26" }
-      ];
-
-      const isValid = validData.some(entry => 
-        entry.org === org && entry.name === name && entry.gender === gender && entry.age === age
-      );
-
-      if (isValid) {
-        alert("환자 정보 접근 가능");
-        window.location.href = "https://example.com/patient-info"; // 실제 환자 정보 페이지 URL
+      // 모든 정보가 일치해야 통과
+      if (info.name === name && info.org === org && info.gender === gender && info.age === age) {
+        sendToGoogleForm(org, name, gender, age, info.url);
       } else {
-        alert("정보가 일치하지 않습니다.");
+        alert("입력한 정보가 코드와 일치하지 않아요!");
       }
     }
   </script>
 </head>
 <body>
-  <h2>1. 개인 식별코드 입력</h2>
+  <h2>개인 식별코드 입력</h2>
   <form onsubmit="checkCode(event)" style="font-size: 18px;">
     <p><input type="text" id="codeInput" placeholder="개인 식별코드" required></p>
     <p><input type="text" id="orgInput_code" placeholder="소속기관" required></p>
     <p><input type="text" id="nameInput_code" placeholder="이름" required></p>
     <p><input type="text" id="genderInput_code" placeholder="성별" required></p>
     <p><input type="text" id="ageInput_code" placeholder="나이" required></p>
-    <button type="submit" style="padding: 10px 20px; font-size: 18px;">식별코드 확인</button>
-  </form>
-
-  <hr>
-
-  <h2>2. 환자 정보 접근 확인</h2>
-  <form onsubmit="event.preventDefault(); checkAccess();" style="font-size: 18px;">
-    <p><input type="text" id="orgInput_access" placeholder="소속기관" required></p>
-    <p><input type="text" id="nameInput_access" placeholder="이름" required></p>
-    <p><input type="text" id="genderInput_access" placeholder="성별" required></p>
-    <p><input type="text" id="ageInput_access" placeholder="나이" required></p>
-    <button type="submit" style="padding: 10px 20px; font-size: 18px;">정보 접근 확인</button>
+    <button type="submit" style="padding: 10px 20px; font-size: 18px;">확인</button>
   </form>
 </body>
 </html>
