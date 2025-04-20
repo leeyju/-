@@ -2,47 +2,89 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>개인 식별코드 입력</title>
-</head>
-<body>
-  <h2>개인 식별코드 입력</h2>
-  <form id="dataForm" target="dummyFrame" style="font-size: 18px;" method="POST"
-    action="https://docs.google.com/forms/d/e/1FAIpQLSfA9MyCF3AloKtzHwEFnyxfXLhHBx7tIpNxK0vGBYdaWL4ltQ/formResponse">
-    
-    <p><input type="text" id="codeInput" placeholder="개인 식별코드" required></p>
-    <p><input type="text" name="entry.866977490" id="orgInput" placeholder="소속기관" required></p>
-    <p><input type="text" name="entry.2090662080" id="nameInput" placeholder="이름" required></p>
-    <p><input type="text" name="entry.30391193" id="genderInput" placeholder="성별" required></p>
-    <p><input type="text" name="entry.1769811738" id="ageInput" placeholder="나이" required></p>
-    
-    <button type="submit" style="padding: 10px 20px; font-size: 18px;">확인</button>
-  </form>
-
-  <iframe name="dummyFrame" style="display:none;"></iframe>
-
+  <title>개인 식별코드 및 응급용 코드 입력</title>
   <script>
-    const codeMap = {
-      "0216": "https://leeyju.github.io/patient-info/patient1.html",
-      "1127": "https://leeyju.github.io/patient-info/patient3.html",
-      "0126": "https://leeyju.github.io/patient-info/Patient4.html",
-      "0915": "https://leeyju.github.io/patient-info/Patient5.html",
-      "0611": "https://leeyju.github.io/patient-info/Patient6.html",
-      "0908": "https://leeyju.github.io/patient-info/Patient7.html"
-    };
+    // 구글 폼에 데이터 전송
+    function sendToGoogleForm(org, name, gender, age, nextUrl) {
+      const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfA9MyCF3AloKtzHwEFnyxfXLhHBx7tIpNxK0vGBYdaWL4ltQ/formResponse";  // 구글폼 링크
 
-    document.getElementById('dataForm').addEventListener('submit', function(e) {
-      e.preventDefault(); // 기본 제출 막고
+      const formData = new FormData();
+      formData.append("entry.866977490", org);       // 소속기관
+      formData.append("entry.2090662080", name);     // 이름
+      formData.append("entry.30391193", gender);     // 성별
+      formData.append("entry.1769811738", age);      // 나이
+
+      fetch(formUrl, {
+        method: "POST",
+        mode: "no-cors",
+        body: formData
+      }).then(() => {
+        window.location.href = nextUrl;  // 폼 제출 후 지정된 URL로 이동
+      }).catch(error => {
+        console.error("구글폼 데이터 전송 실패:", error);
+        alert("데이터 전송 중 오류가 발생했습니다.");
+      });
+    }
+
+    // 개인 식별코드 입력 폼 처리
+    function checkCode(e) {
+      e.preventDefault();
       const code = document.getElementById('codeInput').value;
+      const org = document.getElementById('orgInput').value;
+      const name = document.getElementById('nameInput').value;
+      const gender = document.getElementById('genderInput').value;
+      const age = document.getElementById('ageInput').value;
+
+      const codeMap = {
+        "0216": "https://leeyju.github.io/patient-info/patient1.html",  // 코드와 환자 정보 페이지 연결
+        "1127": "https://leeyju.github.io/patient-info/patient3.html",
+        "0126": "https://leeyju.github.io/patient-info/Patient4.html",
+        "0915": "https://leeyju.github.io/patient-info/Patient5.html",
+        "0611": "https://leeyju.github.io/patient-info/Patient6.html",
+        "0908": "https://leeyju.github.io/patient-info/Patient7.html"
+      };
 
       if (codeMap[code]) {
-        this.submit(); // 진짜 Google Form에 전송!
-        setTimeout(() => {
-          window.location.href = codeMap[code];
-        }, 1000); // 전송 후 환자 정보 페이지로 이동
+        sendToGoogleForm(org, name, gender, age, codeMap[code]);
       } else {
         alert("개인 식별코드가 올바르지 않습니다.");
       }
-    });
+    }
+
+    // 응급용 코드 입력 폼 처리
+    function checkEmergencyCode(e) {
+      e.preventDefault();
+      const emergencyCode = document.getElementById('emergencyCodeInput').value;
+
+      const validCode = "8563";  // 응급용 코드
+
+      if (emergencyCode === validCode) {
+        window.location.href = "https://leeyju.github.io/patient-info/Patient1.html";  // 환자 정보 페이지로 이동
+      } else {
+        alert("잘못된 응급용 코드입니다.");
+      }
+    }
   </script>
+</head>
+<body>
+  <!-- 개인 식별코드 입력 폼 -->
+  <h2>개인 식별코드 입력</h2>
+  <form onsubmit="checkCode(event)" style="font-size: 18px;">
+    <p><input type="text" id="codeInput" placeholder="개인 식별코드" required></p>
+    <p><input type="text" id="orgInput" placeholder="소속기관" required></p>
+    <p><input type="text" id="nameInput" placeholder="이름" required></p>
+    <p><input type="text" id="genderInput" placeholder="성별" required></p>
+    <p><input type="text" id="ageInput" placeholder="나이" required></p>
+    <button type="submit" style="padding: 10px 20px; font-size: 18px;">확인</button>
+  </form>
+
+  <hr>
+
+  <!-- 응급용 코드 입력 폼 -->
+  <h2>응급용 코드 입력</h2>
+  <form onsubmit="checkEmergencyCode(event)" style="font-size: 18px;">
+    <p><input type="text" id="emergencyCodeInput" placeholder="응급용 코드" required></p>
+    <button type="submit" style="padding: 10px 20px; font-size: 18px;">확인</button>
+  </form>
 </body>
 </html>
