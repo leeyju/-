@@ -8,7 +8,8 @@
     function sendToGoogleForm(org, name, gender, age, nextUrl) {
       const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfA9MyCF3AloKtzHwEFnyxfXLhHBx7tIpNxK0vGBYdaWL4ltQ/formResponse";
 
-     formData.append("entry.866977490", org);       // 소속기관
+   const formData = new FormData();
+formData.append("entry.866977490", org);       // 소속기관
 formData.append("entry.2090662080", name);     // 이름
 formData.append("entry.30391193", gender);     // 성별
 formData.append("entry.1769811738", age);      // 나이
