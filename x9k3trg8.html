@@ -2,9 +2,9 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>개인 식별코드 입력</title>
+  <title>환자 정보 접근</title>
   <script>
-    // Google Form으로 정보 전송 후 환자 페이지로 이동
+    // Google Form 전송 후 환자 정보 페이지로 이동
     function sendToGoogleForm(org, name, gender, age, nextUrl) {
       const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfA9MyCF3AloKtzHwEFnyxfXLhHBx7tIpNxK0vGBYdaWL4ltQ/formResponse";
       const formData = new FormData();
@@ -19,57 +19,72 @@
         body: formData
       }).then(() => {
         window.location.href = nextUrl;
-      }).catch(error => {
-        console.error("데이터 전송 오류:", error);
+      }).catch(() => {
         alert("데이터 전송 중 문제가 발생했어요.");
       });
     }
 
-    // 식별코드와 사용자 정보 모두 일치해야 환자 페이지로 이동
-    function checkCode(e) {
-      e.preventDefault();
+    // 환자 코드와 의료인 정보 확인
+    function checkAccess(event) {
+      event.preventDefault();
 
       const code = document.getElementById('codeInput').value;
-      const org = document.getElementById('orgInput_code').value;
-      const name = document.getElementById('nameInput_code').value;
-      const gender = document.getElementById('genderInput_code').value;
-      const age = document.getElementById('ageInput_code').value;
+      const org = document.getElementById('orgInput').value;
+      const name = document.getElementById('nameInput').value;
+      const gender = document.getElementById('genderInput').value;
+      const age = document.getElementById('ageInput').value;
 
-      // 코드별 등록된 정보와 링크 저장
+      // 환자 생년월일(코드) -> 페이지 주소
       const codeMap = {
-        "0923": { name: "안영훈", org: "용인 119", gender: "남", age: "24", url: "https://leeyju.github.io/patient-info/patient1.html" },
-        "1127": { name: "천수현", org: "수원 119", gender: "여", age: "22", url: "https://leeyju.github.io/patient-info/patient3.html" },
-        "0216": { name: "이연주", org: "용인 119", gender: "여", age: "22", url: "https://leeyju.github.io/patient-info/Patient4.html" },
-        "0915": { name: "이재훈", org: "수원 119", gender: "남", age: "24", url: "https://leeyju.github.io/patient-info/Patient5.html" },
-        "0611": { name: "이동훈", org: "수원 119", gender: "남", age: "26", url: "https://leeyju.github.io/patient-info/Patient6.html" },
-        "0908": { name: "김예찬", org: "수원 119", gender: "남", age: "26", url: "https://leeyju.github.io/patient-info/Patient7.html" }
+        "0923": "https://leeyju.github.io/patient-info/patient1.html",
+        "1127": "https://leeyju.github.io/patient-info/patient3.html",
+        "0216": "https://leeyju.github.io/patient-info/Patient4.html",
+        "0915": "https://leeyju.github.io/patient-info/Patient5.html",
+        "0611": "https://leeyju.github.io/patient-info/Patient6.html",
+        "0908": "https://leeyju.github.io/patient-info/Patient7.html"
       };
 
-      const info = codeMap[code];
+      // 접근 가능한 의료인 리스트
+      const validUsers = [
+        { org: "용인 119", name: "안영훈", gender: "남", age: "24" },
+        { org: "수원 119", name: "천수현", gender: "여", age: "22" },
+        { org: "용인 119", name: "이연주", gender: "여", age: "22" },
+        { org: "수원 119", name: "이재훈", gender: "남", age: "24" },
+        { org: "수원 119", name: "이동훈", gender: "남", age: "26" },
+        { org: "수원 119", name: "김예찬", gender: "남", age: "26" }
+      ];
 
-      if (!info) {
-        alert("개인 식별코드가 올바르지 않아요.");
+      const isValidUser = validUsers.some(user =>
+        user.org === org &&
+        user.name === name &&
+        user.gender === gender &&
+        user.age === age
+      );
+
+      if (!isValidUser) {
+        alert("의료인 정보가 일치하지 않아요.");
         return;
       }
 
-      // 모든 정보가 일치해야 통과
-      if (info.name === name && info.org === org && info.gender === gender && info.age === age) {
-        sendToGoogleForm(org, name, gender, age, info.url);
-      } else {
-        alert("입력한 정보가 코드와 일치하지 않아요!");
+      const nextUrl = codeMap[code];
+      if (!nextUrl) {
+        alert("개인 식별코드가 잘못되었어요.");
+        return;
       }
+
+      sendToGoogleForm(org, name, gender, age, nextUrl);
     }
   </script>
 </head>
 <body>
-  <h2>개인 식별코드 입력</h2>
-  <form onsubmit="checkCode(event)" style="font-size: 18px;">
-    <p><input type="text" id="codeInput" placeholder="개인 식별코드" required></p>
-    <p><input type="text" id="orgInput_code" placeholder="소속기관" required></p>
-    <p><input type="text" id="nameInput_code" placeholder="이름" required></p>
-    <p><input type="text" id="genderInput_code" placeholder="성별" required></p>
-    <p><input type="text" id="ageInput_code" placeholder="나이" required></p>
-    <button type="submit" style="padding: 10px 20px; font-size: 18px;">확인</button>
+  <h2>환자 정보 확인</h2>
+  <form onsubmit="checkAccess(event)" style="font-size: 18px;">
+    <p><input type="text" id="codeInput" placeholder="환자 생년월일 (예: 0923)" required></p>
+    <p><input type="text" id="orgInput" placeholder="소속기관" required></p>
+    <p><input type="text" id="nameInput" placeholder="이름" required></p>
+    <p><input type="text" id="genderInput" placeholder="성별" required></p>
+    <p><input type="text" id="ageInput" placeholder="나이" required></p>
+    <button type="submit" style="padding: 10px 20px; font-size: 18px;">접근 확인</button>
   </form>
 </body>
 </html>
