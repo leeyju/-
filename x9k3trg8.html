@@ -12,7 +12,7 @@
       formData.append("entry.2090662080", name);     // 이름
       formData.append("entry.30391193", gender);     // 성별
       formData.append("entry.1769811738", age);      // 나이
- 
+
       fetch(formUrl, {
         method: "POST",
         mode: "no-cors",
@@ -58,7 +58,6 @@
     <p><input type="text" id="nameInput" placeholder="이름" required></p>
     <p><input type="text" id="genderInput" placeholder="성별" required></p>
     <p><input type="text" id="ageInput" placeholder="나이" required></p>
-
     <button type="submit" style="padding: 10px 20px; font-size: 18px;">확인</button>
   </form>
 </body>
