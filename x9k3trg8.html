@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>개인 식별코드 및 응급용 코드 입력</title>
+  <title>개인 식별코드 입력</title>
   <script>
     // 개인 식별코드 처리
     function sendToGoogleForm(org, name, gender, age, nextUrl) {
@@ -48,47 +48,6 @@
         alert("개인 식별코드가 올바르지 않아요.");
       }
     }
-
-    // 응급용 코드 처리
-    function getPatientId() {
-      const params = new URLSearchParams(window.location.search);
-      return params.get("patient");
-    }
-
-    unction handleEmergencyCode(e) {
-  e.preventDefault();
-  const emergencyCode = document.getElementById('emergencyCodeInput').value;
-  const EMERGENCY_CODE = "EMG2025";  // 고정 응급 코드
-
-  // 환자 ID와 해당 페이지를 매칭하는 객체
-  const patientPages = {
-    "hong": "https://leeyju.github.io/patient-info/patient1.html",
-    "kim": "https://leeyju.github.io/patient-info/patient3.html",
-    "lee": "https://leeyju.github.io/patient-info/Patient4.html",
-    "park": "https://leeyju.github.io/patient-info/Patient5.html",
-    "choi": "https://leeyju.github.io/patient-info/Patient6.html",
-    "jung": "https://leeyju.github.io/patient-info/Patient7.html"  // 6번째 환자 추가
-  };
-
-  // 응급 코드가 맞고, 환자 정보가 있을 때
-  if (emergencyCode === EMERGENCY_CODE) {
-    const patientId = prompt("환자 이름을 입력하세요: (예: hong, kim, lee, park, choi, jung)");  // 환자 이름을 입력받음
-
-    console.log("입력된 환자 이름:", patientId);  // 입력된 환자 이름을 로그로 확인
-
-    if (patientPages[patientId]) {
-      window.location.href = patientPages[patientId];  // 해당 환자 페이지로 이동
-    } else {
-      alert("존재하지 않는 환자입니다.");
-    }
-  } else {
-    alert("응급용 코드가 잘못되었어요.");
-  }
-}
-      } else {
-        alert("환자 정보가 잘못되었어요.");
-      }
-    }
   </script>
 </head>
 <body>
@@ -99,14 +58,6 @@
     <p><input type="text" id="nameInput" placeholder="이름" required></p>
     <p><input type="text" id="genderInput" placeholder="성별" required></p>
     <p><input type="text" id="ageInput" placeholder="나이" required></p>
-    <button type="submit" style="padding: 10px 20px; font-size: 18px;">확인</button>
-  </form>
-
-  <hr>
-
-  <h2>응급용 코드 입력</h2>
-  <form onsubmit="handleEmergencyCode(event)" style="font-size: 18px;">
-    <p><input type="text" id="emergencyCodeInput" placeholder="응급용 코드" required></p>
     <button type="submit" style="padding: 10px 20px; font-size: 18px;">확인</button>
   </form>
 </body>
