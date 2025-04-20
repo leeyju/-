@@ -53,12 +53,13 @@
     // 응급용 코드 입력 처리 함수
     function checkEmergencyCode(e) {
       e.preventDefault();  // 폼 제출 시 페이지 새로고침 방지
-      const emergencyCode = document.getElementById('emergencyCodeInput').value;
+      const emergencyCode = document.getElementById('emergencyCodeInput').value.trim();  // 응급용 코드값 가져오기
 
       const validCode = "8563";  // 응급용 코드
 
       if (emergencyCode === validCode) {
-        window.location.href = "https://leeyju.github.io/patient-info/Patient1.html";  // 환자 정보 페이지로 이동
+        // 응급용 코드가 맞으면 환자 정보 페이지로 이동
+        window.location.href = "https://leeyju.github.io/patient-info/Patient1.html"; 
       } else {
         alert("잘못된 응급용 코드입니다.");
       }
