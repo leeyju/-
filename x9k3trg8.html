@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>개인 식별코드 및 응급용 코드 입력</title>
   <script>
-    // 구글 폼에 데이터 전송
+    // 구글 폼에 데이터 전송 함수
     function sendToGoogleForm(org, name, gender, age, nextUrl) {
       const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfA9MyCF3AloKtzHwEFnyxfXLhHBx7tIpNxK0vGBYdaWL4ltQ/formResponse";  // 구글폼 링크
 
@@ -16,7 +16,6 @@
 
       fetch(formUrl, {
         method: "POST",
-        mode: "no-cors",
         body: formData
       }).then(() => {
         window.location.href = nextUrl;  // 폼 제출 후 지정된 URL로 이동
@@ -26,9 +25,9 @@
       });
     }
 
-    // 개인 식별코드 입력 폼 처리
+    // 개인 식별코드 입력 처리 함수
     function checkCode(e) {
-      e.preventDefault();
+      e.preventDefault();  // 폼 제출 시 페이지 새로고침 방지
       const code = document.getElementById('codeInput').value;
       const org = document.getElementById('orgInput').value;
       const name = document.getElementById('nameInput').value;
@@ -51,9 +50,9 @@
       }
     }
 
-    // 응급용 코드 입력 폼 처리
+    // 응급용 코드 입력 처리 함수
     function checkEmergencyCode(e) {
-      e.preventDefault();
+      e.preventDefault();  // 폼 제출 시 페이지 새로고침 방지
       const emergencyCode = document.getElementById('emergencyCodeInput').value;
 
       const validCode = "8563";  // 응급용 코드
