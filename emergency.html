@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>응급 코드 입력</title>
+  <script>
+    function handleEmergencyCode(e) {
+      e.preventDefault();
+      const emergencyCode = document.getElementById('emergencyCodeInput').value;
+      const EMERGENCY_CODE = "EMG2025";
+      const patientId = new URLSearchParams(window.location.search).get("patient");
+
+      const patientPages = {
+        "hong": "https://leeyju.github.io/patient-info/patient1.html",
+        "kim": "https://leeyju.github.io/patient-info/patient3.html",
+        "lee": "https://leeyju.github.io/patient-info/Patient4.html",
+        "park": "https://leeyju.github.io/patient-info/Patient5.html",
+        "choi": "https://leeyju.github.io/patient-info/Patient6.html",
+        "jung": "https://leeyju.github.io/patient-info/Patient7.html"
+      };
+
+      if (emergencyCode === EMERGENCY_CODE && patientPages[patientId]) {
+        window.location.href = patientPages[patientId];
+      } else {
+        alert("응급 코드나 환자 정보가 잘못되었어요.");
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: '맑은 고딕', sans-serif;
+      padding: 40px;
+      background-color: #f5f5f5;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      font-size: 18px;
+      width: 250px;
+      margin-bottom: 15px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #3478f6;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #265edc;
+    }
+  </style>
+</head>
+<body>
+  <h2>응급 코드 입력</h2>
+  <form onsubmit="handleEmergencyCode(event)">
+    <input type="text" id="emergencyCodeInput" placeholder="EMG2025" required><br>
+    <button type="submit">확인</button>
+  </form>
+</body>
+</html>
