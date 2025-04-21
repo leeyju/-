@@ -4,26 +4,6 @@
   <meta charset="UTF-8">
   <title>환자 정보 접근</title>
   <script>
-    // Google Form 전송 후 환자 정보 페이지로 이동
-    function sendToGoogleForm(org, name, gender, age, nextUrl) {
-      const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfA9MyCF3AloKtzHwEFnyxfXLhHBx7tIpNxK0vGBYdaWL4ltQ/formResponse";
-      const formData = new FormData();
-      formData.append("entry.866977490", org);
-      formData.append("entry.2090662080", name);
-      formData.append("entry.30391193", gender);
-      formData.append("entry.1769811738", age);
-
-      fetch(formUrl, {
-        method: "POST",
-        mode: "no-cors",
-        body: formData
-      }).then(() => {
-        window.location.href = nextUrl;
-      }).catch(() => {
-        alert("데이터 전송 중 문제가 발생했어요.");
-      });
-    }
-
     // 환자 코드와 의료인 정보 확인
     function checkAccess(event) {
       event.preventDefault();
@@ -72,7 +52,8 @@
         return;
       }
 
-      sendToGoogleForm(org, name, gender, age, nextUrl);
+      // Google Form 전송 없이 바로 이동
+      window.location.href = nextUrl;
     }
   </script>
 </head>
