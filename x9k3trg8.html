@@ -3,6 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>환자 정보 접근</title>
+  body {
+    justify-container: center;
+    align-items: center;
+    }
   <style>
     body {
       margin: 0;
@@ -19,7 +23,15 @@
       padding: 40px;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      text-align: center;
+      text-align: center; /* 안에 있는 텍스트 모두 가운데 정렬 */
+    }
+
+    .form-container input {
+      width: 300px;
+      height: 40px;
+      font-size: 18px;
+      margin: 10px 0;
+      padding: 5px;
     }
 
     .form-container button {
