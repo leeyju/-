@@ -1,192 +1,162 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <title>환자 정보 접근</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>개인정보 동의</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      height: 100vh;
       font-family: Arial, sans-serif;
       background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
       display: flex;
       justify-content: center;
       align-items: center;
+      height: 100vh;
     }
 
     .section {
-      display: none;
-      text-align: center;
-      width: 100%;
-      max-width: 600px;
-      padding: 40px;
       background-color: white;
+      padding: 40px;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-
-    .section.active {
-      display: block;
+      max-width: 600px;
+      width: 100%;
     }
 
     h2 {
-      font-size: 36px;
-      margin-bottom: 30px;
+      font-size: 28px;
+      margin-bottom: 20px;
+      text-align: center;
     }
 
     label {
-      font-size: 20px;
-      line-height: 1.6;
       display: block;
-      margin: 25px 0;
-      text-align: left;
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 20px;
     }
 
     input[type="checkbox"] {
-      transform: scale(1.4);
+      transform: scale(1.2);
       margin-right: 10px;
     }
 
-    input[type="text"],
-    select {
+    canvas {
+      border: 1px solid #ccc;
       width: 100%;
-      height: 50px;
-      font-size: 18px;
-      margin: 10px 0;
-      padding: 10px;
+      height: 150px;
+      touch-action: none; /* 모바일 터치 지원 */
     }
 
     button {
       margin-top: 30px;
       padding: 15px 30px;
-      font-size: 20px;
+      font-size: 18px;
       background-color: #007BFF;
       color: white;
       border: none;
       border-radius: 5px;
       cursor: pointer;
+      width: 100%;
     }
 
     button:hover {
       background-color: #0056b3;
     }
 
-    .signature-container {
-      margin-top: 40px;
-      text-align: left;
-    }
-
-    #signaturePad {
-      border: 1px solid #ccc;
-      width: 100%;
-      height: 150px;
+    #clearBtn {
       margin-top: 10px;
+      background-color: #6c757d;
     }
   </style>
 </head>
 <body>
-
-  <!-- 개인정보 수집 동의 화면 -->
-  <div id="consentBox" class="section active">
+  <div class="section">
     <h2>개인정보 수집 동의</h2>
-    <label>
-      <input type="checkbox" class="consentCheck">
-      <strong>1. 수집·이용 목적</strong><br>
-      본 동의서는 환자 진료 및 진료 서비스 제공을 위한 개인정보 수집·이용에 대한 환자의 동의를 받기 위해 작성되었습니다.
-    </label>
-    <label>
-      <input type="checkbox" class="consentCheck">
-      <strong>2. 수집하는 개인정보 항목</strong><br>
-      • 필수항목: 성명, 주민등록번호, 주소, 연락처, 건강정보(진료기록, 검사결과 등)<br>
-      • 선택항목: 이메일, 보호자 정보 등
-    </label>
-    <label>
-      <input type="checkbox" class="consentCheck">
-      <strong>3. 보유 및 이용 기간</strong><br>
-      개인정보는 수집·이용 목적이 달성된 후 관련 법령에 따라 보관 및 파기됩니다.
-    </label>
-    <label>
-      <input type="checkbox" class="consentCheck">
-      <strong>4. 동의 거부권 및 불이익 안내</strong><br>
-      귀하는 개인정보 수집·이용에 대한 동의를 거부할 수 있으며, 이 경우 진료 서비스 제공에 일부 제한이 있을 수 있습니다.
-    </label>
-    <label>
-      <input type="checkbox" class="consentCheck">
-      <strong>5. 응급상황 발생시 동의 없이 현장의료인이 열람 가능 안내</strong><br>
-      귀하가 의식이 없거나 그에 준하는 상황에 처해있을 시 현장의료인과 소방청 결정으로 환자의 개인정보를 동의 없이 열람할 수 있습니다.
-    </label>
 
-    <div class="signature-container">
-      <p><strong>서명:</strong> 성명: ______________________ (서명)</p>
-      <p>생년월일: __________________</p>
-      <p>날짜: ________년 ___월 ___일</p>
+    <label><input type="checkbox" class="consentCheck"> <strong>1. 수집·이용 목적</strong> - 진료 서비스 제공을 위해 개인정보를 수집합니다.</label>
+    <label><input type="checkbox" class="consentCheck"> <strong>2. 수집 항목</strong> - 성명, 주민등록번호, 건강정보 등</label>
+    <label><input type="checkbox" class="consentCheck"> <strong>3. 보유 및 이용 기간</strong> - 목적 달성 후 관련 법령에 따라 보관/파기</label>
+    <label><input type="checkbox" class="consentCheck"> <strong>4. 동의 거부 안내</strong> - 거부 시 진료 서비스 제공에 제한이 있을 수 있음</label>
+    <label><input type="checkbox" class="consentCheck"> <strong>5. 응급 상황 시 열람 동의</strong> - 의식이 없을 시 현장의료인이 열람 가능</label>
 
-      <canvas id="signaturePad"></canvas><br>
-      <button type="button" onclick="clearSignature()">서명 지우기</button>
-    </div>
+    <p style="margin-top: 30px; font-size: 18px;"><strong>서명:</strong> (성명, 생년월일, 날짜는 직접 작성)</p>
+    <canvas id="signaturePad" width="600" height="150"></canvas>
+    <button id="clearBtn" onclick="clearSignature()">서명 지우기</button>
 
-    <button onclick="goToInput()">다음</button>
-  </div>
-
-  <!-- 의료인 정보 입력 화면 -->
-  <div id="inputBox" class="section">
-    <h2>환자 정보 확인</h2>
-    <form onsubmit="checkAccess(event)">
-      <input type="text" id="codeInput" placeholder="환자 코드 (예: 0923)"><br>
-
-      <select id="orgInput">
-        <option value="">소속기관 선택</option>
-        <option value="용인 119">용인 119</option>
-        <option value="수원 119">수원 119</option>
-      </select><br>
-
-      <input type="text" id="nameInput" placeholder="이름"><br>
-
-      <label style="text-align: center;">
-        <input type="radio" name="gender" value="남"> 남
-        <input type="radio" name="gender" value="여"> 여
-      </label><br>
-
-      <input type="text" id="ageInput" placeholder="나이"><br>
-      <button type="submit">접근 확인</button>
-    </form>
+    <button onclick="goToNext()">다음</button>
   </div>
 
   <script>
+    // 캔버스 설정
     const canvas = document.getElementById('signaturePad');
     const ctx = canvas.getContext('2d');
     let drawing = false;
-    let isSigned = false;
+    let hasSigned = false;
 
+    function getMousePos(canvas, evt) {
+      const rect = canvas.getBoundingClientRect();
+      return {
+        x: evt.clientX - rect.left,
+        y: evt.clientY - rect.top
+      };
+    }
+
+    function getTouchPos(canvas, touch) {
+      const rect = canvas.getBoundingClientRect();
+      return {
+        x: touch.clientX - rect.left,
+        y: touch.clientY - rect.top
+      };
+    }
+
+    // 마우스 이벤트
     canvas.addEventListener('mousedown', e => {
       drawing = true;
-      isSigned = true;
+      hasSigned = true;
+      const pos = getMousePos(canvas, e);
       ctx.beginPath();
-      ctx.moveTo(e.offsetX, e.offsetY);
+      ctx.moveTo(pos.x, pos.y);
     });
 
     canvas.addEventListener('mousemove', e => {
-      if (drawing) {
-        ctx.lineTo(e.offsetX, e.offsetY);
-        ctx.stroke();
-      }
+      if (!drawing) return;
+      const pos = getMousePos(canvas, e);
+      ctx.lineTo(pos.x, pos.y);
+      ctx.stroke();
     });
 
-    canvas.addEventListener('mouseup', () => {
-      drawing = false;
+    canvas.addEventListener('mouseup', () => drawing = false);
+    canvas.addEventListener('mouseout', () => drawing = false);
+
+    // 터치 이벤트
+    canvas.addEventListener('touchstart', e => {
+      e.preventDefault();
+      drawing = true;
+      hasSigned = true;
+      const pos = getTouchPos(canvas, e.touches[0]);
+      ctx.beginPath();
+      ctx.moveTo(pos.x, pos.y);
     });
 
-    canvas.addEventListener('mouseout', () => {
-      drawing = false;
+    canvas.addEventListener('touchmove', e => {
+      e.preventDefault();
+      if (!drawing) return;
+      const pos = getTouchPos(canvas, e.touches[0]);
+      ctx.lineTo(pos.x, pos.y);
+      ctx.stroke();
     });
+
+    canvas.addEventListener('touchend', () => drawing = false);
 
     function clearSignature() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      isSigned = false;
+      hasSigned = false;
     }
 
-    function goToInput() {
+    function goToNext() {
       const checkboxes = document.querySelectorAll('.consentCheck');
       for (let checkbox of checkboxes) {
         if (!checkbox.checked) {
@@ -195,62 +165,13 @@
         }
       }
 
-      if (!isSigned) {
-        alert("서명을 해주세요.");
+      if (!hasSigned) {
+        alert("서명을 해 주세요.");
         return;
       }
 
-      document.getElementById('consentBox').classList.remove('active');
-      document.getElementById('inputBox').classList.add('active');
-    }
-
-    function checkAccess(event) {
-      event.preventDefault();
-
-      const code = document.getElementById('codeInput').value;
-      const org = document.getElementById('orgInput').value;
-      const name = document.getElementById('nameInput').value;
-      const genderRadio = document.querySelector('input[name="gender"]:checked');
-      const gender = genderRadio ? genderRadio.value : "";
-      const age = document.getElementById('ageInput').value;
-
-      const codeMap = {
-        "0923": "https://leeyju.github.io/patient-info/patient1.html",
-        "1127": "https://leeyju.github.io/patient-info/patient3.html",
-        "0216": "https://leeyju.github.io/patient-info/Patient4.html",
-        "0915": "https://leeyju.github.io/patient-info/Patient5.html",
-        "0611": "https://leeyju.github.io/patient-info/Patient6.html",
-        "0908": "https://leeyju.github.io/patient-info/Patient7.html"
-      };
-
-      const validUsers = [
-        { org: "용인 119", name: "안영훈", gender: "남", age: "24" },
-        { org: "수원 119", name: "천수현", gender: "여", age: "22" },
-        { org: "용인 119", name: "이연주", gender: "여", age: "22" },
-        { org: "수원 119", name: "이재훈", gender: "남", age: "24" },
-        { org: "수원 119", name: "이동훈", gender: "남", age: "26" },
-        { org: "수원 119", name: "김예찬", gender: "남", age: "26" }
-      ];
-
-      const isValidUser = validUsers.some(user =>
-        user.org === org &&
-        user.name === name &&
-        user.gender === gender &&
-        user.age === age
-      );
-
-      if (!isValidUser) {
-        alert("의료인 정보가 일치하지 않아요.");
-        return;
-      }
-
-      const nextUrl = codeMap[code];
-      if (!nextUrl) {
-        alert("개인 식별코드가 잘못되었어요.");
-        return;
-      }
-
-      window.location.href = nextUrl;
+      alert("다음 화면으로 이동합니다!");
+      // 여기에 실제 다음 페이지 이동 코드 넣어도 돼
     }
   </script>
 </body>
