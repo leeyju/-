@@ -202,7 +202,6 @@
         나이
       <label><input type="radio" name="age" value="20대">20대</label>
       <label><input type="radio" name="age" value="30대">30대</label>
-      <label><input type="radio" name="age" value="30대">30대</label>
       <label><input type="radio" name="age" value="40대">40대</label>
       <label><input type="radio" name="age" value="50">50대</label>
       <label><input type="radio" name="age" value="60대">60대</label>
@@ -314,7 +313,8 @@
       const name = document.getElementById('nameInput').value;
       const genderRadio = document.querySelector('input[name="gender"]:checked');
       const gender = genderRadio ? genderRadio.value : "";
-      const age = document.getElementById('ageInput').value;
+      const ageRadio = document.querySelector('input[name="age"]:checked');
+      const age = ageRadio ? ageRadio.value : "";
 
       const codeMap = {
         "0923": "https://leeyju.github.io/patient-info/patient1.html",
