@@ -2,6 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>환자 정보 접근</title>
   <style>
     * {
@@ -90,6 +91,48 @@
 
     .radio-group {
       margin: 10px 0;
+    }
+
+    @media screen and (max-width: 600px) {
+      h2 {
+        font-size: 28px;
+      }
+
+      label {
+        font-size: 18px;
+      }
+
+      input[type="text"],
+      select {
+        height: 50px;
+        font-size: 18px;
+      }
+
+      button {
+        font-size: 20px;
+        padding: 15px;
+      }
+    }
+
+    @media screen and (max-width: 400px) {
+      h2 {
+        font-size: 26px;
+      }
+
+      label {
+        font-size: 16px;
+      }
+
+      input[type="text"],
+      select {
+        height: 45px;
+        font-size: 18px;
+      }
+
+      button {
+        font-size: 22px;
+        padding: 18px;
+      }
     }
   </style>
 </head>
