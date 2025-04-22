@@ -17,26 +17,31 @@
 
     .form-box {
       text-align: center;
+      display: none;
     }
 
-    .form-box h2 {
+    .form-box.active {
+      display: block;
+    }
+
+    h2 {
       font-size: 40px;
-      margin-bottom: 40px;
+      margin-bottom: 30px;
     }
 
-    .form-box input {
+    input[type="text"], select {
       width: 400px;
       height: 50px;
       font-size: 20px;
-      margin: 15px 0;
+      margin: 10px 0;
       padding: 10px;
     }
 
-    .form-box button {
+    .button {
       width: 200px;
       height: 50px;
       font-size: 20px;
-      margin-top: 30px;
+      margin-top: 20px;
       background-color: #007BFF;
       color: white;
       border: none;
@@ -44,18 +49,81 @@
       cursor: pointer;
     }
 
-    .form-box button:hover {
-      background-color: #0056b3;
+    .button:disabled {
+      background-color: #aaa;
+    }
+
+    label {
+      display: block;
+      font-size: 18px;
+      margin: 10px 0;
+    }
+
+    .radio-group {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .radio-group label {
+      margin-right: 20px;
     }
   </style>
+</head>
+<body>
+  <!-- 개인정보 동의 -->
+  <div class="form-box active" id="consentBox">
+    <h2>개인정보 수집 동의</h2>
+    <label><input type="checkbox" class="consent-check"> 이름, 소속 등의 정보 수집에 동의합니다.</label>
+    <label><input type="checkbox" class="consent-check"> 응급상황 시 제3자 제공에 동의합니다.</label>
+    <label><input type="checkbox" class="consent-check"> NFC/QR 기반 열람 기록 저장에 동의합니다.</label>
+    <button class="button" id="toInfoBtn" disabled>다음</button>
+  </div>
+
+  <!-- 정보 입력 -->
+  <div class="form-box" id="inputBox">
+    <h2>환자 정보 확인</h2>
+    <form onsubmit="checkAccess(event)">
+      <input type="text" id="codeInput" placeholder="환자 코드 (예: 0923)"><br>
+      <select id="orgInput">
+        <option value="">소속기관 선택</option>
+        <option value="수원 119">수원 119</option>
+        <option value="용인 119">용인 119</option>
+      </select><br>
+      <input type="text" id="nameInput" placeholder="이름"><br>
+      <div class="radio-group">
+        <label><input type="radio" name="gender" value="남"> 남</label>
+        <label><input type="radio" name="gender" value="여"> 여</label>
+      </div>
+      <input type="text" id="ageInput" placeholder="나이"><br>
+      <button type="submit" class="button">접근 확인</button>
+    </form>
+  </div>
+
   <script>
+    // 체크박스 동의 여부 확인
+    const checkboxes = document.querySelectorAll('.consent-check');
+    const nextBtn = document.getElementById('toInfoBtn');
+
+    checkboxes.forEach(cb => {
+      cb.addEventListener('change', () => {
+        const allChecked = [...checkboxes].every(c => c.checked);
+        nextBtn.disabled = !allChecked;
+      });
+    });
+
+    nextBtn.addEventListener('click', () => {
+      document.getElementById('consentBox').classList.remove('active');
+      document.getElementById('inputBox').classList.add('active');
+    });
+
+    // 정보 확인 후 환자 페이지로 이동
     function checkAccess(event) {
       event.preventDefault();
 
       const code = document.getElementById('codeInput').value;
       const org = document.getElementById('orgInput').value;
       const name = document.getElementById('nameInput').value;
-      const gender = document.getElementById('genderInput').value;
+      const gender = document.querySelector('input[name="gender"]:checked')?.value || '';
       const age = document.getElementById('ageInput').value;
 
       const codeMap = {
@@ -97,18 +165,5 @@
       window.location.href = nextUrl;
     }
   </script>
-</head>
-<body>
-  <div class="form-box">
-    <h2>환자 정보 확인</h2>
-    <form onsubmit="checkAccess(event)">
-      <input type="text" id="codeInput" placeholder="환자 코드 (예: 0923)"><br>
-      <input type="text" id="orgInput" placeholder="소속기관"><br>
-      <input type="text" id="nameInput" placeholder="이름"><br>
-      <input type="text" id="genderInput" placeholder="성별"><br>
-      <input type="text" id="ageInput" placeholder="나이"><br>
-      <button type="submit">접근 확인</button>
-    </form>
-  </div>
 </body>
 </html>
