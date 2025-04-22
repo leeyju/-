@@ -8,8 +8,8 @@
       margin: 0;
       height: 100vh;
       display: flex;
-      justify-content: center; /* 가로 가운데 정렬 */
-      align-items: center;     /* 세로 가운데 정렬 */
+      justify-content: center;  /* 가로 가운데 정렬 */
+      align-items: center;      /* 세로 가운데 정렬 */
       background-color: #f2f2f2;
       font-family: Arial, sans-serif;
     }
@@ -47,6 +47,7 @@
 
     h2 {
       margin-bottom: 20px;
+      text-align: center;
     }
   </style>
 
@@ -99,17 +100,19 @@
       window.location.href = nextUrl;
     }
   </script>
-</head
+</head>
 
 <body>
-  <h2>환자 정보 확인</h2>
-  <form onsubmit="checkAccess(event)" style="font-size: 18px;">
-    <p><input type="text" id="codeInput" placeholder="환자가 설정한 코드 (예: 0923)" style="width: 300px; height: 40px; font-size: 18px;"><br><br>
-    <p><input type="text" id="orgInput" placeholder="소속기관" style="width: 300px; height: 40px; font-size: 18px;"><br><br>
-    <p><input type="text" id="nameInput" placeholder="이름" style="width: 300px; height: 40px; font-size: 18px;"><br><br>
-    <p><input type="text" id="genderInput" placeholder="성별" style="width: 300px; height: 40px; font-size: 18px;"><br><br>
-    <p><input type="text" id="ageInput" placeholder="나이" style="width: 300px; height: 40px; font-size: 18px;"><br><br>
-    <button type="submit" style="padding: 10px 20px; font-size: 18px;">접근 확인</button>
-  </form>
+  <div class="form-container">
+    <h2>환자 정보 확인</h2>
+    <form onsubmit="checkAccess(event)">
+      <input type="text" id="codeInput" placeholder="환자 코드 (예: 0923)"><br>
+      <input type="text" id="orgInput" placeholder="소속기관"><br>
+      <input type="text" id="nameInput" placeholder="이름"><br>
+      <input type="text" id="genderInput" placeholder="성별"><br>
+      <input type="text" id="ageInput" placeholder="나이"><br>
+      <button type="submit">접근 확인</button>
+    </form>
+  </div>
 </body>
 </html>
