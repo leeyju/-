@@ -302,15 +302,61 @@
         return;
       }
 
+      }
+
       document.getElementById('consentBox').classList.remove('active');
       document.getElementById('inputBox').classList.add('active');
     }
 
     function checkAccess(event) {
       event.preventDefault();
-      alert("접근이 확인되었습니다!");
-      // 실제 인증 및 페이지 이동 로직은 여기에 추가
+
+      const code = document.getElementById('codeInput').value;
+      const org = document.getElementById('orgInput').value;
+      const name = document.getElementById('nameInput').value;
+      const genderRadio = document.querySelector('input[name="gender"]:checked');
+      const gender = genderRadio ? genderRadio.value : "";
+      const age = document.getElementById('ageInput').value;
+
+      const codeMap = {
+        "0923": "https://leeyju.github.io/patient-info/patient1.html",
+        "1127": "https://leeyju.github.io/patient-info/patient3.html",
+        "0216": "https://leeyju.github.io/patient-info/Patient4.html",
+        "0915": "https://leeyju.github.io/patient-info/Patient5.html",
+        "0611": "https://leeyju.github.io/patient-info/Patient6.html",
+        "0908": "https://leeyju.github.io/patient-info/Patient7.html"
+      };
+
+      const validUsers = [
+        { org: "용인 119", name: "안영훈", gender: "남", age: "24" },
+        { org: "수원 119", name: "천수현", gender: "여", age: "22" },
+        { org: "용인 119", name: "이연주", gender: "여", age: "22" },
+        { org: "수원 119", name: "이재훈", gender: "남", age: "24" },
+        { org: "수원 119", name: "이동훈", gender: "남", age: "26" },
+        { org: "수원 119", name: "김예찬", gender: "남", age: "26" }
+      ];
+
+      const isValidUser = validUsers.some(user =>
+        user.org === org &&
+        user.name === name &&
+        user.gender === gender &&
+        user.age === age
+      );
+
+      if (!isValidUser) {
+        alert("의료인 정보가 일치하지 않아요.");
+        return;
+      }
+
+      const nextUrl = codeMap[code];
+      if (!nextUrl) {
+        alert("개인 식별코드가 잘못되었어요.");
+        return;
+      }
+
+      window.location.href = nextUrl;
     }
   </script>
+
 </body>
 </html>
