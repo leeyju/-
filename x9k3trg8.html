@@ -298,15 +298,13 @@
       }
 
       if (!isSigned) {
-        alert("서명해 주세요.");
-        return;
-      }
+  alert("서명해 주세요.");
+  return;
+}
 
-      }
-
-      document.getElementById('consentBox').classList.remove('active');
-      document.getElementById('inputBox').classList.add('active');
-    }
+  document.getElementById('consentBox').classList.remove('active');
+  document.getElementById('inputBox').classList.add('active');
+}
 
     function checkAccess(event) {
       event.preventDefault();
