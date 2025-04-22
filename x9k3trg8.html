@@ -1,5 +1,3 @@
-잠깐만 색히야..
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -155,56 +153,96 @@
     </form>
   </div>
 
-  <script>
-    const canvas = document.getElementById('signaturePad');
-    const ctx = canvas.getContext('2d');
-    let drawing = false;
-    let isSigned = false;
+    <script>
+  const canvas = document.getElementById('signaturePad');
+  const ctx = canvas.getContext('2d');
+  let drawing = false;
+  let isSigned = false;
 
-    canvas.addEventListener('mousedown', e => {
+  // 캔버스 크기 초기화 (반응형 대응)
+  function resizeCanvas() {
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  // 마우스 이벤트
+  canvas.addEventListener('mousedown', e => {
+    drawing = true;
+    isSigned = true;
+    ctx.beginPath();
+    ctx.moveTo(e.offsetX, e.offsetY);
+  });
+
+  canvas.addEventListener('mousemove', e => {
+    if (drawing) {
+      ctx.lineTo(e.offsetX, e.offsetY);
+      ctx.stroke();
+    }
+  });
+
+  canvas.addEventListener('mouseup', () => {
+    drawing = false;
+  });
+
+  canvas.addEventListener('mouseout', () => {
+    drawing = false;
+  });
+
+  // 터치 이벤트
+  canvas.addEventListener('touchstart', e => {
+    if (e.touches.length === 1) {
+      e.preventDefault();
+      const rect = canvas.getBoundingClientRect();
+      const x = e.touches[0].clientX - rect.left;
+      const y = e.touches[0].clientY - rect.top;
       drawing = true;
       isSigned = true;
       ctx.beginPath();
-      ctx.moveTo(e.offsetX, e.offsetY);
-    });
-
-    canvas.addEventListener('mousemove', e => {
-      if (drawing) {
-        ctx.lineTo(e.offsetX, e.offsetY);
-        ctx.stroke();
-      }
-    });
-
-    canvas.addEventListener('mouseup', () => {
-      drawing = false;
-    });
-
-    canvas.addEventListener('mouseout', () => {
-      drawing = false;
-    });
-
-    function clearSignature() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      isSigned = false;
+      ctx.moveTo(x, y);
     }
+  }, { passive: false });
 
-    function goToInput() {
-      const checkboxes = document.querySelectorAll('.consentCheck');
-      for (let checkbox of checkboxes) {
-        if (!checkbox.checked) {
-          alert("모든 항목에 동의해 주세요.");
-          return;
-        }
-      }
+  canvas.addEventListener('touchmove', e => {
+    if (drawing && e.touches.length === 1) {
+      e.preventDefault();
+      const rect = canvas.getBoundingClientRect();
+      const x = e.touches[0].clientX - rect.left;
+      const y = e.touches[0].clientY - rect.top;
+      ctx.lineTo(x, y);
+      ctx.stroke();
+    }
+  }, { passive: false });
 
-      if (!isSigned) {
-        alert("서명을 해주세요.");
+  canvas.addEventListener('touchend', () => {
+    drawing = false;
+  });
+
+  function clearSignature() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    isSigned = false;
+  }
+
+  function goToInput() {
+    const checkboxes = document.querySelectorAll('.consentCheck');
+    for (let checkbox of checkboxes) {
+      if (!checkbox.checked) {
+        alert("모든 항목에 동의해 주세요.");
         return;
       }
-
-      document.getElementById('consentBox').classList.remove('active');
-      document.getElementById('inputBox').classList.add('active');
     }
+
+    if (!isSigned) {
+      alert("서명을 해주세요.");
+      return;
+    }
+
+    document.getElementById('consentBox').classList.remove('active');
+    document.getElementById('inputBox').classList.add('active');
+  }
+</script>
+
 
     function checkAccess(event) {
       event.preventDefault();
@@ -257,4 +295,3 @@
   </script>
 </body>
 </html>
-여기에다가 네가 수정한 코드를 넣어줘야지
