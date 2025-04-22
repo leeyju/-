@@ -6,23 +6,24 @@
   <style>
     body {
       margin: 0;
-      padding: 40px; /* 화면이 너무 붙지 않도록 살짝 패딩만 줌 */
+      height: 100vh;
+      display: flex;
+      justify-content: center;  /* 가로 가운데 정렬 */
+      align-items: center;      /* 세로 가운데 정렬 */
       background-color: #f2f2f2;
       font-family: Arial, sans-serif;
     }
 
     .form-container {
-      max-width: 400px;
-      margin: 0 auto; /* 수평 가운데 정렬 */
       background-color: white;
       padding: 40px;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      text-align: center;
+      text-align: center; /* 안에 있는 텍스트 모두 가운데 정렬 */
     }
 
     .form-container input {
-      width: 100%;
+      width: 300px;
       height: 40px;
       font-size: 18px;
       margin: 10px 0;
@@ -46,6 +47,7 @@
 
     h2 {
       margin-bottom: 20px;
+      text-align: center;
     }
   </style>
 
