@@ -3,6 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <title>환자 정보 접근</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .center-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+  </style>
   <script>
     // 환자 코드와 의료인 정보 확인
     function checkAccess(event) {
@@ -56,27 +70,20 @@
       window.location.href = nextUrl;
     }
   </script>
-  <style>
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-  </style>
 </head>
 <body>
-  <div>
-    <h2>환자 정보 확인</h2>
-    <form onsubmit="checkAccess(event)" style="font-size: 18px;">
-      <p><input type="text" id="codeInput" placeholder="환자가 설정한 코드 (예: 0923)" style="width: 300px; height: 40px; font-size: 18px;"><br><br>
-      <p><input type="text" id="orgInput" placeholder="소속기관" style="width: 300px; height: 40px; font-size: 18px;"><br><br>
-      <p><input type="text" id="nameInput" placeholder="이름" style="width: 300px; height: 40px; font-size: 18px;"><br><br>
-      <p><input type="text" id="genderInput" placeholder="성별" style="width: 300px; height: 40px; font-size: 18px;"><br><br>
-      <p><input type="text" id="ageInput" placeholder="나이" style="width: 300px; height: 40px; font-size: 18px;"><br><br>
-      <button type="submit" style="padding: 10px 20px; font-size: 18px;">접근 확인</button>
-    </form>
+  <div class="center-container">
+    <div>
+      <h2>환자 정보 확인</h2>
+      <form onsubmit="checkAccess(event)" style="font-size: 18px;">
+        <p><input type="text" id="codeInput" placeholder="환자가 설정한 코드 (예: 0923)" style="width: 300px; height: 40px; font-size: 18px;"></p>
+        <p><input type="text" id="orgInput" placeholder="소속기관" style="width: 300px; height: 40px; font-size: 18px;"></p>
+        <p><input type="text" id="nameInput" placeholder="이름" style="width: 300px; height: 40px; font-size: 18px;"></p>
+        <p><input type="text" id="genderInput" placeholder="성별" style="width: 300px; height: 40px; font-size: 18px;"></p>
+        <p><input type="text" id="ageInput" placeholder="나이" style="width: 300px; height: 40px; font-size: 18px;"></p>
+        <button type="submit" style="padding: 10px 20px; font-size: 18px;">접근 확인</button>
+      </form>
+    </div>
   </div>
 </body>
 </html>
