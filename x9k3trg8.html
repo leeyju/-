@@ -5,10 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>환자 정보 접근</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       padding: 0;
@@ -19,7 +16,6 @@
       align-items: center;
       min-height: 100vh;
     }
-
     .section {
       display: none;
       background-color: #fff;
@@ -29,23 +25,17 @@
       border-radius: 10px;
       box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
     }
-
-    .section.active {
-      display: block;
-    }
-
+    .section.active { display: block; }
     h2 {
       font-size: 24px;
       text-align: center;
       margin-bottom: 20px;
     }
-
     label {
       display: block;
       font-size: 16px;
       margin: 12px 0;
     }
-
     input[type="text"],
     select {
       width: 100%;
@@ -54,17 +44,14 @@
       font-size: 16px;
       margin-top: 5px;
     }
-
     input[type="checkbox"],
     input[type="radio"] {
       transform: scale(1.2);
       margin-right: 8px;
     }
-
     .signature-container {
       margin-top: 20px;
     }
-
     canvas {
       border: 1px solid #ccc;
       width: 100%;
@@ -72,7 +59,6 @@
       margin-top: 10px;
       touch-action: none;
     }
-
     button {
       display: block;
       width: 100%;
@@ -85,81 +71,42 @@
       border-radius: 6px;
       cursor: pointer;
     }
-
-    button:hover {
-      background-color: #0056b3;
-    }
-
-    .radio-group {
-      margin: 10px 0;
-    }
-
+    button:hover { background-color: #0056b3; }
+    .radio-group { margin: 10px 0; }
     .consent-text {
       margin-top: 15px;
       font-size: 16px;
       line-height: 1.6;
       color: #333;
     }
-
-    @media screen and (max-width: 600px) {
-      h2 {
-        font-size: 28px;
-      }
-
-      label {
-        font-size: 18px;
-      }
-
-      input[type="text"],
-      select {
-        height: 50px;
-        font-size: 18px;
-      }
-
-      button {
-        font-size: 20px;
-        padding: 15px;
-      }
-    }
   </style>
 </head>
 <body>
-
   <div id="consentBox" class="section active">
     <h2>환자 개인정보 수집·이용 동의서</h2>
     <div class="consent-text">
       <p><strong>1. 수집·이용 목적</strong><br>
         본 동의서는 환자 진료 및 진료 서비스 제공을 위한 개인정보 수집·이용에 대한 환자의 동의를 받기 위해 작성되었습니다.</p>
       <label><input type="checkbox" class="consentCheck"> 수집·이용 목적에 동의합니다.</label>
-
       <p><strong>2. 수집하는 개인정보 항목</strong><br>
-        • 필수항목: 성명, 주민등록번호, 주소, 연락처, 건강정보(진료기록, 검사결과 등)<br>
-        • 선택항목: 이메일, 보호자 정보 등</p>
+        필수항목: 성명, 주민등록번호, 주소, 연락처, 건강정보 등</p>
       <label><input type="checkbox" class="consentCheck"> 개인정보 항목 수집에 동의합니다.</label>
-
-      <p><strong>3. 개인정보의 보유 및 이용 기간</strong><br>
-        • 수집된 개인정보는 의료법 등 관련 법령에 따라 보관되며, 보관 기간이 지난 후에는 즉시 파기됩니다.<br>
-        • 진료기록부: 최종 진료일로부터 10년 보관</p>
+      <p><strong>3. 보유 및 이용 기간</strong><br>
+        진료기록부: 최종 진료일로부터 10년 보관</p>
       <label><input type="checkbox" class="consentCheck"> 보유 및 이용 기간에 동의합니다.</label>
-
-      <p><strong>4. 동의 거부권 및 불이익 안내</strong><br>
-        귀하는 개인정보 수집·이용에 대한 동의를 거부할 수 있으며, 이 경우 진료 서비스 제공에 일부 제한이 있을 수 있습니다.</p>
+      <p><strong>4. 동의 거부권 및 불이익 안내</strong></p>
       <label><input type="checkbox" class="consentCheck"> 동의 거부 시 불이익 설명을 확인했습니다.</label>
-
-      <p><strong>5. 응급상황 발생시 동의 없이 현장의료인이 열람 가능 안내</strong><br>
-        귀하가 의식이 없거나 그에 준하는 상황에 처해있을 시 현장의료인과 소방청 결정으로 환자의 개인정보를 동의 없이 열람할 수 있습니다.</p>
-      <label><input type="checkbox" class="consentCheck"> 응급상황 시 동의 없이 열람 가능함에 동의합니다.</label>
-      
-      
-          <label><input type="checkbox" class="consentCheck"> 본인은 위 내용을 충분히 이해하였으며, 이에 동의합니다.</label>
+      <p><strong>5. 응급상황 발생시 열람 안내</strong></p>
+      <label><input type="checkbox" class="consentCheck"> 응급상황 시 열람 가능함에 동의합니다.</label>
+      <label><input type="checkbox" class="consentCheck"> 본인은 위 내용을 충분히 이해하였으며, 이에 동의합니다.</label>
     </div>
 
     <div class="signature-container">
       <input type="text" id="typedName" placeholder="성명 입력">
       <input type="text" id="birthDate" placeholder="생년월일 (예: 990101)">
       <input type="text" id="signDate" placeholder="날짜 (예: 2025-04-22)">
-      <p style="margin-top:15px;"><strong>서명:</strong></p>
-      <canvas id="signaturePad" width="300" height="150"></canvas>
+      <p><strong>서명:</strong></p>
+      <canvas id="signaturePad"></canvas>
       <button type="button" onclick="clearSignature()">서명 지우기</button>
     </div>
 
@@ -168,47 +115,7 @@
 
   <div id="inputBox" class="section">
     <h2>환자코드 및 의료인 확인</h2>
-    <form onsubmit="checkAccess(event)">
-      <input type="text" id="codeInput" placeholder="환자 코드">
-      <select id="orgInput">
-        <option value="">소속기관 선택 (지역 선택)</option>
-        <option value="강원도">강원도</option>
-        <option value="경기도">경기도</option>
-        <option value="경상남도">경상남도</option>
-        <option value="경상북도">경상북도</option>
-        <option value="광주광역시">광주광역시</option>
-        <option value="대구광역시">대구광역시</option>
-        <option value="대전광역시">대전광역시</option>
-        <option value="부산광역시">부산광역시</option>
-        <option value="서울특별시">서울특별시</option>
-        <option value="세종특별자치시">세종특별자치시</option>
-        <option value="울산광역시">울산광역시</option>
-        <option value="인천광역시">인천광역시</option>
-        <option value="전라남도">전라남도</option>
-        <option value="전라북도">전라북도</option>
-        <option value="제주특별자치도">제주특별자치도</option>
-        <option value="충청남도">충청남도</option>
-        <option value="충청북도">충청북도</option>
-        
-        
-      </select>
-      <input type="text" id="nameInput" placeholder="이름">
-      <div class="radio-group">
-        성별
-        <label><input type="radio" name="gender" value="남"> 남</label>
-        <label><input type="radio" name="gender" value="여"> 여</label>
-      </div>
-      <div class="radio-group">
-        나이
-      <label><input type="radio" name="age" value="20대">20대</label>
-      <label><input type="radio" name="age" value="30대">30대</label>
-      <label><input type="radio" name="age" value="40대">40대</label>
-      <label><input type="radio" name="age" value="50">50대</label>
-      <label><input type="radio" name="age" value="60대">60대</label>
-      <label><input type="radio" name="age" value="70대이상">70대이상</label>
-      </div>
-      <button type="submit">접근 확인</button>
-    </form>
+    <!-- input 영역은 생략 가능 -->
   </div>
 
   <script>
@@ -218,9 +125,8 @@
     let isSigned = false;
 
     function resizeCanvas() {
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      canvas.width = canvas.offsetWidth;
+      canvas.height = 150;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
     resizeCanvas();
@@ -281,80 +187,30 @@
         }
       }
 
-      if (!document.getElementById('typedName').value.trim()) {
+      const typedName = document.getElementById('typedName').value.trim();
+      const birthDate = document.getElementById('birthDate').value.trim();
+      const signDate = document.getElementById('signDate').value.trim();
+
+      if (!typedName) {
         alert("성명을 입력해 주세요.");
         return;
       }
-
-      if (!document.getElementById('birthDate').value.trim()) {
+      if (!birthDate) {
         alert("생년월일을 입력해 주세요.");
         return;
       }
-
-      if (!document.getElementById('signDate').value.trim()) {
+      if (!signDate) {
         alert("날짜를 입력해 주세요.");
         return;
       }
-
       if (!isSigned) {
-  alert("서명해 주세요.");
-  return;
-}
-
-  document.getElementById('consentBox').classList.remove('active');
-  document.getElementById('inputBox').classList.add('active');
-}
-
-    function checkAccess(event) {
-      event.preventDefault();
-
-      const code = document.getElementById('codeInput').value;
-      const org = document.getElementById('orgInput').value;
-      const name = document.getElementById('nameInput').value;
-      const genderRadio = document.querySelector('input[name="gender"]:checked');
-      const gender = genderRadio ? genderRadio.value : "";
-      const ageRadio = document.querySelector('input[name="age"]:checked');
-      const age = ageRadio ? ageRadio.value : "";
-
-      const codeMap = {
-        "0923": "https://leeyju.github.io/patient-info/patient1.html",
-        "1127": "https://leeyju.github.io/patient-info/patient3.html",
-        "0216": "https://leeyju.github.io/patient-info/Patient4.html",
-        "0915": "https://leeyju.github.io/patient-info/Patient5.html",
-        "0611": "https://leeyju.github.io/patient-info/Patient6.html",
-        "0908": "https://leeyju.github.io/patient-info/Patient7.html"
-      };
-
-      const validUsers = [
-        { org: "경기도", name: "안영훈", gender: "남", age: "20대" },
-        { org: "경기도", name: "천수현", gender: "여", age: "20대" },
-        { org: "경기도", name: "이연주", gender: "여", age: "20대" },
-        { org: "경기도", name: "이재훈", gender: "남", age: "20대" },
-        { org: "경기도", name: "이동훈", gender: "남", age: "20대" },
-        { org: "경기도", name: "김예찬", gender: "남", age: "20대" }
-      ];
-
-      const isValidUser = validUsers.some(user =>
-        user.org === org &&
-        user.name === name &&
-        user.gender === gender &&
-        user.age === age
-      );
-
-      if (!isValidUser) {
-        alert("의료인 정보가 일치하지 않아요.");
+        alert("서명해 주세요.");
         return;
       }
 
-      const nextUrl = codeMap[code];
-      if (!nextUrl) {
-        alert("개인 식별코드가 잘못되었어요.");
-        return;
-      }
-
-      window.location.href = nextUrl;
+      document.getElementById('consentBox').classList.remove('active');
+      document.getElementById('inputBox').classList.add('active');
     }
   </script>
-
 </body>
 </html>
