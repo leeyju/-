@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <title>환자 정보 접근</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       padding: 0;
@@ -15,33 +19,72 @@
       font-family: Arial, sans-serif;
     }
 
-    .form-box {
-      text-align: center;
+    .section {
       display: none;
     }
 
-    .form-box.active {
+    .active {
       display: block;
     }
 
-    h2 {
-      font-size: 40px;
+    #consentBox {
+      width: 600px;
+      padding: 40px;
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    #consentBox h2 {
+      font-size: 48px;
       margin-bottom: 30px;
     }
 
-    input[type="text"], select {
+    #consentBox label {
+      font-size: 22px;
+      display: block;
+      margin: 20px 0;
+    }
+
+    #toInfoBtn {
+      font-size: 24px;
+      width: 220px;
+      height: 60px;
+      margin-top: 30px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    #toInfoBtn:hover {
+      background-color: #0056b3;
+    }
+
+    .form-box {
+      text-align: center;
+    }
+
+    .form-box h2 {
+      font-size: 40px;
+      margin-bottom: 40px;
+    }
+
+    .form-box input {
       width: 400px;
       height: 50px;
       font-size: 20px;
-      margin: 10px 0;
+      margin: 15px 0;
       padding: 10px;
     }
 
-    .button {
+    .form-box button {
       width: 200px;
       height: 50px;
       font-size: 20px;
-      margin-top: 20px;
+      margin-top: 30px;
       background-color: #007BFF;
       color: white;
       border: none;
@@ -49,92 +92,30 @@
       cursor: pointer;
     }
 
-    .button:disabled {
-      background-color: #aaa;
-    }
-
-    label {
-      display: block;
-      font-size: 18px;
-      margin: 10px 0;
-    }
-
-    .radio-group {
-      font-size: 18px;
-      margin-bottom: 20px;
-    }
-
-    .radio-group label {
-      margin-right: 20px;
+    .form-box button:hover {
+      background-color: #0056b3;
     }
   </style>
-</head>
-<body>
-  <!-- 개인정보 동의 -->
-  <div class="form-box active" id="consentBox">
-    <h2>[환자 개인정보 수집·이용 동의서]</h2>
-    <label><input type="checkbox" class="consent-check">1. 수집·이용 목적
-본 동의서는 환자 진료 및 진료 서비스 제공을 위한 개인정보 수집·이용에 대한 환자의 동의를 받기 위해 작성되었습니다.</label>
-    <label><input type="checkbox" class="consent-check"> 2. 수집하는 개인정보 항목
-   •   필수항목: 성명, 주민등록번호, 주소, 연락처, 건강정보(진료기록, 검사결과 등)
-   •   선택항목: 이메일, 보호자 정보 등</label>
-    <label><input type="checkbox" class="consent-check"> 3. 개인정보의 보유 및 이용 기간
-   •   수집된 개인정보는 의료법 등 관련 법령에 따라 보관되며, 보관 기간이 지난 후에는 즉시 파기됩니다.
-   •   진료기록부: 최종 진료일로부터 10년 보관.</label>
-     <label><input type="checkbox" class="consent-check"> 4. 동의 거부권 및 불이익 안내
-귀하는 개인정보 수집·이용에 대한 동의를 거부할 수 있으며, 이 경우 진료 서비스 제공에 일부 제한이 있을 수 있습니다.</label>
-     <label><input type="checkbox" class="consent-check"> 5. 응급상황 발생시 동의 없이 현장의료인이 열람 가능 안내
-귀하가 의식이 없거나 그에 준하는 상황에 처해있을 시 현장의료인과 소방청 결정으로 환자의 개인정보를 동의 없이 열람할 수 있습니다.</label>
-
-
-    <button class="button" id="toInfoBtn" disabled>다음</button>
-  </div>
-
-  <!-- 정보 입력 -->
-  <div class="form-box" id="inputBox">
-    <h2>환자 정보 확인</h2>
-    <form onsubmit="checkAccess(event)">
-      <input type="text" id="codeInput" placeholder="환자 코드 (예: 0923)"><br>
-      <select id="orgInput">
-        <option value="">소속기관 선택</option>
-        <option value="수원 119">수원 119</option>
-        <option value="용인 119">용인 119</option>
-      </select><br>
-      <input type="text" id="nameInput" placeholder="이름"><br>
-      <div class="radio-group">
-        <label><input type="radio" name="gender" value="남"> 남</label>
-        <label><input type="radio" name="gender" value="여"> 여</label>
-      </div>
-      <input type="text" id="ageInput" placeholder="나이"><br>
-      <button type="submit" class="button">접근 확인</button>
-    </form>
-  </div>
-
   <script>
-    // 체크박스 동의 여부 확인
-    const checkboxes = document.querySelectorAll('.consent-check');
-    const nextBtn = document.getElementById('toInfoBtn');
+    function goToInput() {
+      const checkboxes = document.querySelectorAll('#consentBox input[type="checkbox"]');
+      const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+      if (!allChecked) {
+        alert("모든 항목에 동의해주세요.");
+        return;
+      }
 
-    checkboxes.forEach(cb => {
-      cb.addEventListener('change', () => {
-        const allChecked = [...checkboxes].every(c => c.checked);
-        nextBtn.disabled = !allChecked;
-      });
-    });
-
-    nextBtn.addEventListener('click', () => {
       document.getElementById('consentBox').classList.remove('active');
-      document.getElementById('inputBox').classList.add('active');
-    });
+      document.getElementById('infoInput').classList.add('active');
+    }
 
-    // 정보 확인 후 환자 페이지로 이동
     function checkAccess(event) {
       event.preventDefault();
 
       const code = document.getElementById('codeInput').value;
       const org = document.getElementById('orgInput').value;
       const name = document.getElementById('nameInput').value;
-      const gender = document.querySelector('input[name="gender"]:checked')?.value || '';
+      const gender = document.getElementById('genderInput').value;
       const age = document.getElementById('ageInput').value;
 
       const codeMap = {
@@ -175,6 +156,33 @@
 
       window.location.href = nextUrl;
     }
+
+    window.onload = () => {
+      document.getElementById('consentBox').classList.add('active');
+    }
   </script>
+</head>
+<body>
+  <!-- 개인정보 수집 동의 화면 -->
+  <div id="consentBox" class="section">
+    <h2>개인정보 수집 동의</h2>
+    <label><input type="checkbox"> 수집 목적에 동의합니다.</label>
+    <label><input type="checkbox"> 제3자 제공에 동의합니다.</label>
+    <label><input type="checkbox"> 이용 기간에 동의합니다.</label>
+    <button id="toInfoBtn" onclick="goToInput()">다음</button>
+  </div>
+
+  <!-- 의료인 정보 입력 화면 -->
+  <div id="infoInput" class="form-box section">
+    <h2>환자 정보 확인</h2>
+    <form onsubmit="checkAccess(event)">
+      <input type="text" id="codeInput" placeholder="환자 코드 (예: 0923)"><br>
+      <input type="text" id="orgInput" placeholder="소속기관"><br>
+      <input type="text" id="nameInput" placeholder="이름"><br>
+      <input type="text" id="genderInput" placeholder="성별"><br>
+      <input type="text" id="ageInput" placeholder="나이"><br>
+      <button type="submit">접근 확인</button>
+    </form>
+  </div>
 </body>
 </html>
