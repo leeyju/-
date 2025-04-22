@@ -3,54 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>환자 정보 접근</title>
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center; /* 가로 가운데 정렬 */
-      align-items: center;     /* 세로 가운데 정렬 */
-      background-color: #f2f2f2;
-      font-family: Arial, sans-serif;
-    }
-
-    .form-container {
-      background-color: white;
-      padding: 40px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      text-align: center;
-    }
-
-    .form-container input {
-      width: 300px;
-      height: 40px;
-      font-size: 18px;
-      margin: 10px 0;
-      padding: 5px;
-    }
-
-    .form-container button {
-      padding: 10px 20px;
-      font-size: 18px;
-      margin-top: 20px;
-      cursor: pointer;
-      background-color: #007BFF;
-      color: white;
-      border: none;
-      border-radius: 5px;
-    }
-
-    .form-container button:hover {
-      background-color: #0056b3;
-    }
-
-    h2 {
-      margin-bottom: 20px;
-    }
-  </style>
-
   <script>
+    // 환자 코드와 의료인 정보 확인
     function checkAccess(event) {
       event.preventDefault();
 
@@ -60,6 +14,7 @@
       const gender = document.getElementById('genderInput').value;
       const age = document.getElementById('ageInput').value;
 
+      // 환자가 설정한 코드 -> 페이지 주소
       const codeMap = {
         "0923": "https://leeyju.github.io/patient-info/patient1.html",
         "1127": "https://leeyju.github.io/patient-info/patient3.html",
@@ -69,6 +24,7 @@
         "0908": "https://leeyju.github.io/patient-info/Patient7.html"
       };
 
+      // 접근 가능한 의료인 리스트
       const validUsers = [
         { org: "용인 119", name: "안영훈", gender: "남", age: "24" },
         { org: "수원 119", name: "천수현", gender: "여", age: "22" },
@@ -96,22 +52,20 @@
         return;
       }
 
+      // Google Form 전송 없이 바로 이동
       window.location.href = nextUrl;
     }
   </script>
 </head>
-
 <body>
-  <div class="form-container">
-    <h2>환자 정보 확인</h2>
-    <form onsubmit="checkAccess(event)">
-      <input type="text" id="codeInput" placeholder="환자 코드 (예: 0923)"><br>
-      <input type="text" id="orgInput" placeholder="소속기관"><br>
-      <input type="text" id="nameInput" placeholder="이름"><br>
-      <input type="text" id="genderInput" placeholder="성별"><br>
-      <input type="text" id="ageInput" placeholder="나이"><br>
-      <button type="submit">접근 확인</button>
-    </form>
-  </div>
+  <h2>환자 정보 확인</h2>
+  <form onsubmit="checkAccess(event)" style="font-size: 18px;">
+    <p><input type="text" id="codeInput" placeholder="환자가 설정한 코드 (예: 0923)" style="width: 300px; height: 40px; font-size: 18px;"><br><br>
+    <p><input type="text" id="orgInput" placeholder="소속기관" style="width: 300px; height: 40px; font-size: 18px;"><br><br>
+    <p><input type="text" id="nameInput" placeholder="이름" style="width: 300px; height: 40px; font-size: 18px;"><br><br>
+    <p><input type="text" id="genderInput" placeholder="성별" style="width: 300px; height: 40px; font-size: 18px;"><br><br>
+    <p><input type="text" id="ageInput" placeholder="나이" style="width: 300px; height: 40px; font-size: 18px;"><br><br>
+    <button type="submit" style="padding: 10px 20px; font-size: 18px;">접근 확인</button>
+  </form>
 </body>
 </html>
