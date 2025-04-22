@@ -104,6 +104,58 @@
       <strong>5. 응급상황 발생시 동의 없이 현장의료인이 열람 가능 안내</strong><br>
 귀하가 의식이 없거나 그에 준하는 상황에 처해있을 시 현장의료인과 소방청 결정으로 환자의 개인정보를 동의 없이 열람할 수 있습니다.
 <!-- 동의서 서명 섹션 추가 -->
+<!-- 동의서 서명 섹션 추가 -->
+<div style="margin-top: 40px; text-align: left;">
+  <p style="font-size: 20px;"><strong>서명:</strong></p>
+  <canvas id="signaturePad" width="500" height="200" style="border:1px solid #ccc;"></canvas><br>
+  <button type="button" onclick="clearSignature()">서명 지우기</button>
+  
+  <div style="margin-top: 20px;">
+    <label>
+      <span style="font-size: 18px;">성명:</span>
+      <input type="text" id="signName" style="width: 300px; height: 40px; font-size: 16px;">
+    </label><br><br>
+    <label>
+      <span style="font-size: 18px;">생년월일:</span>
+      <input type="text" id="signBirth" style="width: 300px; height: 40px; font-size: 16px;" placeholder="예: 1999-01-01">
+    </label><br><br>
+    <label>
+      <span style="font-size: 18px;">날짜:</span>
+      <input type="text" id="signDate" style="width: 300px; height: 40px; font-size: 16px;" placeholder="예: 2025-04-22">
+    </label>
+  </div>
+</div>
+
+<script>
+  const canvas = document.getElementById('signaturePad');
+  const ctx = canvas.getContext('2d');
+  let drawing = false;
+
+  canvas.addEventListener('mousedown', e => {
+    drawing = true;
+    ctx.beginPath();
+    ctx.moveTo(e.offsetX, e.offsetY);
+  });
+
+  canvas.addEventListener('mousemove', e => {
+    if (drawing) {
+      ctx.lineTo(e.offsetX, e.offsetY);
+      ctx.stroke();
+    }
+  });
+
+  canvas.addEventListener('mouseup', () => {
+    drawing = false;
+  });
+
+  canvas.addEventListener('mouseout', () => {
+    drawing = false;
+  });
+
+  function clearSignature() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+</script>
 <div style="margin-top: 40px; text-align: left;">
   <p style="font-size: 20px;"><strong>서명:</strong></p>
   <canvas id="signaturePad" width="500" height="200" style="border:1px solid #ccc;"></canvas><br>
