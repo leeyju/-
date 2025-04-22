@@ -72,10 +72,21 @@
 <body>
   <!-- 개인정보 동의 -->
   <div class="form-box active" id="consentBox">
-    <h2>개인정보 수집 동의</h2>
-    <label><input type="checkbox" class="consent-check"> 이름, 소속 등의 정보 수집에 동의합니다.</label>
-    <label><input type="checkbox" class="consent-check"> 응급상황 시 제3자 제공에 동의합니다.</label>
-    <label><input type="checkbox" class="consent-check"> NFC/QR 기반 열람 기록 저장에 동의합니다.</label>
+    <h2>[환자 개인정보 수집·이용 동의서]</h2>
+    <label><input type="checkbox" class="consent-check">1. 수집·이용 목적
+본 동의서는 환자 진료 및 진료 서비스 제공을 위한 개인정보 수집·이용에 대한 환자의 동의를 받기 위해 작성되었습니다.</label>
+    <label><input type="checkbox" class="consent-check"> 2. 수집하는 개인정보 항목
+   •   필수항목: 성명, 주민등록번호, 주소, 연락처, 건강정보(진료기록, 검사결과 등)
+   •   선택항목: 이메일, 보호자 정보 등</label>
+    <label><input type="checkbox" class="consent-check"> 3. 개인정보의 보유 및 이용 기간
+   •   수집된 개인정보는 의료법 등 관련 법령에 따라 보관되며, 보관 기간이 지난 후에는 즉시 파기됩니다.
+   •   진료기록부: 최종 진료일로부터 10년 보관.</label>
+     <label><input type="checkbox" class="consent-check"> 4. 동의 거부권 및 불이익 안내
+귀하는 개인정보 수집·이용에 대한 동의를 거부할 수 있으며, 이 경우 진료 서비스 제공에 일부 제한이 있을 수 있습니다.</label>
+     <label><input type="checkbox" class="consent-check"> 5. 응급상황 발생시 동의 없이 현장의료인이 열람 가능 안내
+귀하가 의식이 없거나 그에 준하는 상황에 처해있을 시 현장의료인과 소방청 결정으로 환자의 개인정보를 동의 없이 열람할 수 있습니다.</label>
+
+
     <button class="button" id="toInfoBtn" disabled>다음</button>
   </div>
 
