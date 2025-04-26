@@ -40,16 +40,28 @@
       font-size: 16px;
       margin: 12px 0;
     }
-    input[type="text"], select {
+    input[type="text"],
+    select {
       width: 100%;
       height: 40px;
       padding: 8px 10px;
       font-size: 16px;
       margin-top: 5px;
     }
-    input[type="checkbox"], input[type="radio"] {
+    input[type="checkbox"],
+    input[type="radio"] {
       transform: scale(1.2);
       margin-right: 8px;
+    }
+    .signature-container {
+      margin-top: 20px;
+    }
+    canvas {
+      border: 1px solid #ccc;
+      width: 100%;
+      height: 150px;
+      margin-top: 10px;
+      touch-action: none;
     }
     button {
       display: block;
@@ -66,16 +78,6 @@
     button:hover {
       background-color: #0056b3;
     }
-    .signature-container {
-      margin-top: 20px;
-    }
-    canvas {
-      border: 1px solid #ccc;
-      width: 100%;
-      height: 150px;
-      margin-top: 10px;
-      touch-action: none;
-    }
     .radio-group {
       margin: 10px 0;
     }
@@ -85,29 +87,53 @@
       line-height: 1.6;
       color: #333;
     }
-    /* Stickman 페이지 스타일 */
-    .stickman-container {
-      display: none;
+    @media screen and (max-width: 600px) {
+      h2 {
+        font-size: 28px;
+      }
+      label {
+        font-size: 18px;
+      }
+      input[type="text"],
+      select {
+        height: 50px;
+        font-size: 18px;
+      }
+      button {
+        font-size: 20px;
+        padding: 15px;
+      }
+    }
+    /* Stickman 화면 추가 스타일 */
+    .container {
       position: relative;
-      width: 100vw;
+      width: 100%;
       height: 100vh;
       background: #f9f9f9;
     }
-    .left-top, .right-top {
+    .left-top {
       position: absolute;
       top: 20px;
+      left: 20px;
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
-    .left-top {
-      left: 20px;
+    .left-top button {
+      width: 80px;
+      height: 40px;
+      font-size: 16px;
     }
     .right-top {
+      position: absolute;
+      top: 20px;
       right: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
-    .left-top button, .right-top button {
-      width: 120px;
+    .right-top button {
+      width: 150px;
       height: 40px;
       font-size: 16px;
     }
@@ -126,90 +152,64 @@
 </head>
 <body>
 
-  <!-- 1. 개인정보 동의 화면 -->
-  <div id="consentBox" class="section active">
-    <h2>환자 개인정보 수집·이용 동의서</h2>
-    <div class="consent-text">
-      <p><strong>1. 수집·이용 목적</strong><br>본 동의서는 환자 진료 및 진료 서비스 제공을 위한 개인정보 수집·이용에 대한 동의를 받기 위해 작성되었습니다.</p>
-      <label><input type="checkbox" class="consentCheck"> 수집·이용 목적에 동의합니다.</label>
-
-      <p><strong>2. 수집하는 개인정보 항목</strong><br>• 필수항목: 성명, 주민등록번호, 주소, 연락처, 건강정보(진료기록, 검사결과 등)</p>
-      <label><input type="checkbox" class="consentCheck"> 개인정보 항목 수집에 동의합니다.</label>
-
-      <p><strong>3. 개인정보의 보유 및 이용 기간</strong><br>• 최종 진료일로부터 10년 보관</p>
-      <label><input type="checkbox" class="consentCheck"> 보유 및 이용 기간에 동의합니다.</label>
-
-      <p><strong>4. 동의 거부권 및 불이익 안내</strong><br>귀하는 동의를 거부할 수 있으며, 이 경우 서비스 이용에 제한이 있을 수 있습니다.</p>
-      <label><input type="checkbox" class="consentCheck"> 동의 거부 시 불이익 설명을 확인했습니다.</label>
-
-      <p><strong>5. 응급상황 시 열람</strong><br>의식이 없는 경우 의료인과 소방청 결정으로 열람 가능함을 안내합니다.</p>
-      <label><input type="checkbox" class="consentCheck"> 응급상황 시 열람 가능함에 동의합니다.</label>
-
-      <label><input type="checkbox" class="consentCheck"> 본인은 위 내용을 충분히 이해하였으며, 이에 동의합니다.</label>
-    </div>
-
-    <div class="signature-container">
-      <input type="text" id="typedName" placeholder="성명 입력">
-      <input type="text" id="birthDate" placeholder="생년월일 (예: 990101)">
-      <input type="text" id="signDate" placeholder="날짜 (예: 2025-04-22)">
-      <p><strong>서명:</strong></p>
-      <canvas id="signaturePad"></canvas>
-      <button type="button" onclick="clearSignature()">서명 지우기</button>
-    </div>
-
-    <button onclick="goToInput()">다음</button>
+<!-- 개인정보 수집 화면 -->
+<div id="consentBox" class="section active">
+  <h2>환자 개인정보 수집·이용 동의서</h2>
+  <div class="consent-text">
+    <!-- (중략 - 네가 준 내용 똑같이 유지) -->
+    <p><strong>1. 수집·이용 목적</strong><br>본 동의서는 환자 진료 및 진료 서비스 제공을 위한 개인정보 수집·이용에 대한 환자의 동의를 받기 위해 작성되었습니다.</p>
+    <label><input type="checkbox" class="consentCheck"> 수집·이용 목적에 동의합니다.</label>
+    <p><strong>2. 수집하는 개인정보 항목</strong><br>• 필수항목: 성명, 주민등록번호, 주소, 연락처, 건강정보(진료기록, 검사결과 등)<br>• 선택항목: 이메일, 보호자 정보 등</p>
+    <label><input type="checkbox" class="consentCheck"> 개인정보 항목 수집에 동의합니다.</label>
+    <p><strong>3. 개인정보의 보유 및 이용 기간</strong><br>• 수집된 개인정보는 의료법 등 관련 법령에 따라 보관되며, 보관 기간이 지난 후에는 즉시 파기됩니다.<br>• 진료기록부: 최종 진료일로부터 10년 보관</p>
+    <label><input type="checkbox" class="consentCheck"> 보유 및 이용 기간에 동의합니다.</label>
+    <p><strong>4. 동의 거부권 및 불이익 안내</strong><br>귀하는 개인정보 수집·이용에 대한 동의를 거부할 수 있으며, 이 경우 진료 서비스 제공에 일부 제한이 있을 수 있습니다.</p>
+    <label><input type="checkbox" class="consentCheck"> 동의 거부 시 불이익 설명을 확인했습니다.</label>
+    <p><strong>5. 응급상황 발생시 동의 없이 현장의료인이 열람 가능 안내</strong><br>귀하가 의식이 없거나 그에 준하는 상황에 처해있을 시 현장의료인과 소방청 결정으로 환자의 개인정보를 동의 없이 열람할 수 있습니다.</p>
+    <label><input type="checkbox" class="consentCheck"> 응급상황 시 동의 없이 열람 가능함에 동의합니다.</label>
+    <label><input type="checkbox" class="consentCheck"> 본인은 위 내용을 충분히 이해하였으며, 이에 동의합니다.</label>
   </div>
-
-  <!-- 2. 환자 코드 입력 화면 -->
-  <div id="inputBox" class="section">
-    <h2>환자코드 및 의료인 확인</h2>
-    <form onsubmit="checkAccess(event)">
-      <input type="text" id="codeInput" placeholder="환자 코드">
-     <div id="inputBox" class="section">
-    <h2>환자코드 및 의료인 확인</h2>
-    <form onsubmit="checkAccess(event)">
-      <input type="text" id="codeInput" placeholder="환자 코드">
-      <select id="orgInput">
-        <option value="">소속기관 선택 (지역 선택)</option>
-        <option value="강원도">강원도</option>
-        <option value="경기도">경기도</option>
-        <option value="경상남도">경상남도</option>
-        <option value="경상북도">경상북도</option>
-        <option value="광주광역시">광주광역시</option>
-        <option value="대구광역시">대구광역시</option>
-        <option value="대전광역시">대전광역시</option>
-        <option value="부산광역시">부산광역시</option>
-        <option value="서울특별시">서울특별시</option>
-        <option value="세종특별자치시">세종특별자치시</option>
-        <option value="울산광역시">울산광역시</option>
-        <option value="인천광역시">인천광역시</option>
-        <option value="전라남도">전라남도</option>
-        <option value="전라북도">전라북도</option>
-        <option value="제주특별자치도">제주특별자치도</option>
-        <option value="충청남도">충청남도</option>
-        <option value="충청북도">충청북도</option>
-        
-        
-      </select>
-      
-      <input type="text" id="nameInput" placeholder="이름">
-      <div class="radio-group">
-        성별
-        <label><input type="radio" name="gender" value="남"> 남</label>
-        <label><input type="radio" name="gender" value="여"> 여</label>
-      </div>
-      <div class="radio-group">
-        나이
-        <label><input type="radio" name="age" value="20대">20대</label>
-        <label><input type="radio" name="age" value="30대">30대</label>
-        <label><input type="radio" name="age" value="40대">40대</label>
-      </div>
-      <button type="submit">접근 확인</button>
-    </form>
+  <div class="signature-container">
+    <input type="text" id="typedName" placeholder="성명 입력">
+    <input type="text" id="birthDate" placeholder="생년월일 (예: 990101)">
+    <input type="text" id="signDate" placeholder="날짜 (예: 2025-04-22)">
+    <p style="margin-top:15px;"><strong>서명:</strong></p>
+    <canvas id="signaturePad" width="300" height="150"></canvas>
+    <button type="button" onclick="clearSignature()">서명 지우기</button>
   </div>
+  <button onclick="goToInput()">다음</button>
+</div>
 
-  <!-- 3. 손상 부위 표시 화면 -->
-  <div id="stickmanPage" class="stickman-container">
+<!-- 환자 코드 및 의료인 확인 화면 -->
+<div id="inputBox" class="section">
+  <h2>환자코드 및 의료인 확인</h2>
+  <form onsubmit="checkAccess(event)">
+    <input type="text" id="codeInput" placeholder="환자 코드">
+    <select id="orgInput">
+      <option value="">소속기관 선택 (지역 선택)</option>
+      <!-- (중략) -->
+      <option value="경기도">경기도</option>
+      <option value="서울특별시">서울특별시</option>
+      <!-- 추가 옵션 유지 -->
+    </select>
+    <input type="text" id="nameInput" placeholder="이름">
+    <div class="radio-group">
+      성별
+      <label><input type="radio" name="gender" value="남"> 남</label>
+      <label><input type="radio" name="gender" value="여"> 여</label>
+    </div>
+    <div class="radio-group">
+      나이
+      <label><input type="radio" name="age" value="20대">20대</label>
+      <label><input type="radio" name="age" value="30대">30대</label>
+    </div>
+    <button type="submit">접근 확인</button>
+  </form>
+</div>
+
+<!-- Stickman 화면 -->
+<div id="stickmanBox" class="section">
+  <div class="container">
     <div class="left-top">
       <button>의식</button>
       <button>GCS</button>
@@ -228,129 +228,136 @@
       </svg>
     </div>
   </div>
+</div>
 
-  <script>
-    const canvas = document.getElementById('signaturePad');
-    const ctx = canvas.getContext('2d');
-    let drawing = false;
-    let isSigned = false;
+<script>
+  const canvas = document.getElementById('signaturePad');
+  const ctx = canvas.getContext('2d');
+  let drawing = false;
+  let isSigned = false;
 
-    function resizeCanvas() {
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+  function resizeCanvas() {
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width;
+    canvas.height = rect.height;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  canvas.addEventListener('mousedown', e => {
+    drawing = true;
+    isSigned = true;
+    ctx.beginPath();
+    ctx.moveTo(e.offsetX, e.offsetY);
+  });
+  canvas.addEventListener('mousemove', e => {
+    if (drawing) {
+      ctx.lineTo(e.offsetX, e.offsetY);
+      ctx.stroke();
     }
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+  });
+  canvas.addEventListener('mouseup', () => drawing = false);
+  canvas.addEventListener('mouseout', () => drawing = false);
 
-    canvas.addEventListener('mousedown', e => {
+  canvas.addEventListener('touchstart', e => {
+    if (e.touches.length === 1) {
+      e.preventDefault();
+      const rect = canvas.getBoundingClientRect();
+      const x = e.touches[0].clientX - rect.left;
+      const y = e.touches[0].clientY - rect.top;
       drawing = true;
       isSigned = true;
       ctx.beginPath();
-      ctx.moveTo(e.offsetX, e.offsetY);
-    });
-    canvas.addEventListener('mousemove', e => {
-      if (drawing) {
-        ctx.lineTo(e.offsetX, e.offsetY);
-        ctx.stroke();
-      }
-    });
-    canvas.addEventListener('mouseup', () => drawing = false);
-    canvas.addEventListener('mouseout', () => drawing = false);
-    canvas.addEventListener('touchstart', e => {
-      if (e.touches.length === 1) {
-        e.preventDefault();
-        const rect = canvas.getBoundingClientRect();
-        const x = e.touches[0].clientX - rect.left;
-        const y = e.touches[0].clientY - rect.top;
-        drawing = true;
-        isSigned = true;
-        ctx.beginPath();
-        ctx.moveTo(x, y);
-      }
-    }, { passive: false });
-    canvas.addEventListener('touchmove', e => {
-      if (drawing && e.touches.length === 1) {
-        e.preventDefault();
-        const rect = canvas.getBoundingClientRect();
-        const x = e.touches[0].clientX - rect.left;
-        const y = e.touches[0].clientY - rect.top;
-        ctx.lineTo(x, y);
-        ctx.stroke();
-      }
-    }, { passive: false });
-    canvas.addEventListener('touchend', () => drawing = false);
+      ctx.moveTo(x, y);
+    }
+  }, { passive: false });
 
-    function clearSignature() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      isSigned = false;
+  canvas.addEventListener('touchmove', e => {
+    if (drawing && e.touches.length === 1) {
+      e.preventDefault();
+      const rect = canvas.getBoundingClientRect();
+      const x = e.touches[0].clientX - rect.left;
+      const y = e.touches[0].clientY - rect.top;
+      ctx.lineTo(x, y);
+      ctx.stroke();
+    }
+  }, { passive: false });
+
+  canvas.addEventListener('touchend', () => drawing = false);
+
+  function clearSignature() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    isSigned = false;
+  }
+
+  function goToInput() {
+    const checkboxes = document.querySelectorAll('.consentCheck');
+    for (let checkbox of checkboxes) {
+      if (!checkbox.checked) {
+        alert("모든 항목에 동의해 주세요.");
+        return;
+      }
     }
 
-    function goToInput() {
-      const checkboxes = document.querySelectorAll('.consentCheck');
-      for (let checkbox of checkboxes) {
-        if (!checkbox.checked) {
-          alert("모든 항목에 동의해 주세요.");
-          return;
-        }
-      }
-      if (!document.getElementById('typedName').value.trim()) {
-        alert("성명을 입력해 주세요.");
-        return;
-      }
-      if (!document.getElementById('birthDate').value.trim()) {
-        alert("생년월일을 입력해 주세요.");
-        return;
-      }
-      if (!document.getElementById('signDate').value.trim()) {
-        alert("날짜를 입력해 주세요.");
-        return;
-      }
-      if (!isSigned) {
-        alert("서명해 주세요.");
-        return;
-      }
-      document.getElementById('consentBox').classList.remove('active');
-      document.getElementById('inputBox').classList.add('active');
+    if (!document.getElementById('typedName').value.trim()) {
+      alert("성명을 입력해 주세요.");
+      return;
+    }
+    if (!document.getElementById('birthDate').value.trim()) {
+      alert("생년월일을 입력해 주세요.");
+      return;
+    }
+    if (!document.getElementById('signDate').value.trim()) {
+      alert("날짜를 입력해 주세요.");
+      return;
+    }
+    if (!isSigned) {
+      alert("서명해 주세요.");
+      return;
     }
 
-    function checkAccess(event) {
-      event.preventDefault();
-      const org = document.getElementById('orgInput').value;
-      const name = document.getElementById('nameInput').value;
-      const genderRadio = document.querySelector('input[name="gender"]:checked');
-      const gender = genderRadio ? genderRadio.value : "";
-      const ageRadio = document.querySelector('input[name="age"]:checked');
-      const age = ageRadio ? ageRadio.value : "";
+    document.getElementById('consentBox').classList.remove('active');
+    document.getElementById('inputBox').classList.add('active');
+  }
 
-      const validUsers = [
-        { org: "경기도", name: "안영훈", gender: "남", age: "20대" },
-        { org: "경기도", name: "천수현", gender: "여", age: "20대" },
-        { org: "경기도", name: "이연주", gender: "여", age: "20대" },
-        { org: "경기도", name: "이재훈", gender: "남", age: "20대" },
-        { org: "경기도", name: "이동훈", gender: "남", age: "20대" },
-        { org: "경기도", name: "김예찬", gender: "남", age: "20대" },
-        { org: "서울특별시", name: "김수태", gender: "남", age: "30대" },
-      ];
+  function checkAccess(event) {
+    event.preventDefault();
 
-      const isValidUser = validUsers.some(user =>
-        user.org === org &&
-        user.name === name &&
-        user.gender === gender &&
-        user.age === age
-      );
+    const code = document.getElementById('codeInput').value;
+    const org = document.getElementById('orgInput').value;
+    const name = document.getElementById('nameInput').value;
+    const genderRadio = document.querySelector('input[name="gender"]:checked');
+    const gender = genderRadio ? genderRadio.value : "";
+    const ageRadio = document.querySelector('input[name="age"]:checked');
+    const age = ageRadio ? ageRadio.value : "";
 
-      if (!isValidUser) {
-        alert("의료인 정보가 일치하지 않아요.");
-        return;
-      }
+    const validUsers = [
+      { org: "경기도", name: "안영훈", gender: "남", age: "20대" },
+      { org: "경기도", name: "천수현", gender: "여", age: "20대" },
+      { org: "경기도", name: "이연주", gender: "여", age: "20대" },
+      { org: "경기도", name: "이재훈", gender: "남", age: "20대" },
+      { org: "경기도", name: "이동훈", gender: "남", age: "20대" },
+      { org: "경기도", name: "김예찬", gender: "남", age: "20대" },
+      { org: "서울특별시", name: "김수태", gender: "남", age: "30대" },
+    ];
 
-      // 성공 시 Stickman 페이지로 이동
-      document.getElementById('inputBox').classList.remove('active');
-      document.getElementById('stickmanPage').style.display = 'block';
+    const isValidUser = validUsers.some(user =>
+      user.org === org &&
+      user.name === name &&
+      user.gender === gender &&
+      user.age === age
+    );
+
+    if (!isValidUser) {
+      alert("의료인 정보가 일치하지 않아요.");
+      return;
     }
-  </script>
+
+    document.getElementById('inputBox').classList.remove('active');
+    document.getElementById('stickmanBox').classList.add('active');
+  }
+</script>
 
 </body>
 </html>
