@@ -8,7 +8,6 @@
     * {
       box-sizing: border-box;
     }
-
     body {
       margin: 0;
       padding: 0;
@@ -19,7 +18,6 @@
       align-items: center;
       min-height: 100vh;
     }
-
     .section {
       display: none;
       background-color: #fff;
@@ -29,23 +27,19 @@
       border-radius: 10px;
       box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
     }
-
     .section.active {
       display: block;
     }
-
     h2 {
       font-size: 24px;
       text-align: center;
       margin-bottom: 20px;
     }
-
     label {
       display: block;
       font-size: 16px;
       margin: 12px 0;
     }
-
     input[type="text"],
     select {
       width: 100%;
@@ -54,17 +48,14 @@
       font-size: 16px;
       margin-top: 5px;
     }
-
     input[type="checkbox"],
     input[type="radio"] {
       transform: scale(1.2);
       margin-right: 8px;
     }
-
     .signature-container {
       margin-top: 20px;
     }
-
     canvas {
       border: 1px solid #ccc;
       width: 100%;
@@ -72,7 +63,6 @@
       margin-top: 10px;
       touch-action: none;
     }
-
     button {
       display: block;
       width: 100%;
@@ -85,37 +75,30 @@
       border-radius: 6px;
       cursor: pointer;
     }
-
     button:hover {
       background-color: #0056b3;
     }
-
     .radio-group {
       margin: 10px 0;
     }
-
     .consent-text {
       margin-top: 15px;
       font-size: 16px;
       line-height: 1.6;
       color: #333;
     }
-
     @media screen and (max-width: 600px) {
       h2 {
         font-size: 28px;
       }
-
       label {
         font-size: 18px;
       }
-
       input[type="text"],
       select {
         height: 50px;
         font-size: 18px;
       }
-
       button {
         font-size: 20px;
         padding: 15px;
@@ -150,8 +133,7 @@
         귀하가 의식이 없거나 그에 준하는 상황에 처해있을 시 현장의료인과 소방청 결정으로 환자의 개인정보를 동의 없이 열람할 수 있습니다.</p>
       <label><input type="checkbox" class="consentCheck"> 응급상황 시 동의 없이 열람 가능함에 동의합니다.</label>
       
-      
-          <label><input type="checkbox" class="consentCheck"> 본인은 위 내용을 충분히 이해하였으며, 이에 동의합니다.</label>
+      <label><input type="checkbox" class="consentCheck"> 본인은 위 내용을 충분히 이해하였으며, 이에 동의합니다.</label>
     </div>
 
     <div class="signature-container">
@@ -189,8 +171,6 @@
         <option value="제주특별자치도">제주특별자치도</option>
         <option value="충청남도">충청남도</option>
         <option value="충청북도">충청북도</option>
-        
-        
       </select>
       <input type="text" id="nameInput" placeholder="이름">
       <div class="radio-group">
@@ -294,13 +274,13 @@
       }
 
       if (!isSigned) {
-  alert("서명해 주세요.");
-  return;
-}
+        alert("서명해 주세요.");
+        return;
+      }
 
-  document.getElementById('consentBox').classList.remove('active');
-  document.getElementById('inputBox').classList.add('active');
-}
+      document.getElementById('consentBox').classList.remove('active');
+      document.getElementById('inputBox').classList.add('active');
+    }
 
     function checkAccess(event) {
       event.preventDefault();
@@ -330,7 +310,6 @@
         { org: "경기도", name: "이동훈", gender: "남", age: "20대" },
         { org: "경기도", name: "김예찬", gender: "남", age: "20대" },
         { org: "서울특별시", name: "김수태", gender: "남", age: "30대" },
-        
       ];
 
       const isValidUser = validUsers.some(user =>
@@ -352,6 +331,14 @@
       }
 
       window.location.href = nextUrl;
+
+      // 여기에 버튼 하나 추가 (이미지 링크)
+      const newBtn = document.createElement('button');
+      newBtn.innerText = "추가 이미지 보기";
+      newBtn.onclick = function() {
+        window.open('https://leeyju.github.io/patientcode/IMG_4739.jpeg', '_blank');
+      };
+      document.body.appendChild(newBtn);
     }
   </script>
 
